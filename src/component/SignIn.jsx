@@ -3,7 +3,7 @@ import styles from "./SignIn.module.css";
 // import { SignIn } from "../store/SignUp-store";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/dist/js/bootstrap.bundle.min";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 // import { firestore } from "../firebaseConfig";
 // import { addDoc, collection } from "firebase/firestore";
 import Sidebar from "./Sidebar";
@@ -84,11 +84,20 @@ const SignIn = ({ signInToUp, homepage,loginTOhome }) => {
 
   const UserNameElement = useRef();
   const passwordElement = useRef();
-
+  const [alertMsg, setalertMsg] = useState("");
+  const [alertTitle, setalertTitle] = useState("");
+  const [alertIcon, setalertIcon] = useState("");
   const handleSubmit = async (event) => {
     event.preventDefault();
     const username = UserNameElement.current.value;
     const password = passwordElement.current.value;
+    if (!username || !password) {
+      setalertIcon("error");
+      setalertMsg("Please fill in all the details first.");
+      setalertTitle("Error");
+      showAlert("error", "Error", "Please fill in all the details first.");
+      return;
+    }
     try {
       await signInWithEmailAndPassword(auth, username, password);
       const user = auth.currentUser;
@@ -101,6 +110,17 @@ const SignIn = ({ signInToUp, homepage,loginTOhome }) => {
     passwordElement.current.value = "";
   };
 
+  const showAlert = (icon, title, message) => {
+    Swal.fire({
+      title: title,
+      text: message,
+      icon: icon,
+      confirmButtonText: "OK",
+      background: "#f8f9fa",
+      color: "#000",
+      timer: 3000,
+    });
+  };
   const [sidebar, setsidebar] = useState(0);
   // const { currLoggedInUser } = useContext(SignIn);
   const changingSidebar = (customVal) => {
