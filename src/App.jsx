@@ -1,8 +1,8 @@
-import Header from "./component/Header";
-import DisplayCounter from "./component/DisplayCounter";
-import Modal from "./component/Modal";
-import Controls from "./component/Controls";
-import ErrorMess from "./component/ErrorMess";
+// import Header from "./component/Header";
+// import DisplayCounter from "./component/DisplayCounter";
+// import Modal from "./component/Modal";
+// import Controls from "./component/Controls";
+// import ErrorMess from "./component/ErrorMess";
 import { useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./component/SignUp";
