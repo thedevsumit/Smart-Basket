@@ -1,0 +1,12 @@
+.main-container{
+    width: 400px;
+    height: 100vh;
+    overflow-x: hidden;
+}
+.main-scanner{
+    width: 300px;
+    overflow-x: hidden;
+}
+.scan-item{
+    background-color: green;
+}
