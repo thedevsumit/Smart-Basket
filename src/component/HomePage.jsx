@@ -130,7 +130,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
       </div>
       <HowToUse/>
       <Footer />
-      {1 && <MainShoppingPage></MainShoppingPage>}
+      {/* {1 && <MainShoppingPage></MainShoppingPage>} */}
     </>
   );
 };

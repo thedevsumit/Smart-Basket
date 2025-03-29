@@ -11,7 +11,7 @@ const HowToUse = () => {
               Vist the SmartBasket web app on your device. Make sure your camera
               permissions are enabled for scanning.
             </p>
-            <img src="smartbasketurl.png" alt="" />
+            {/* <img src="smartbasketurl.png" alt="" /> */}
             <p className="htu-para">
               To enable permission for camera click on <CgOptions /> then click
               on <b>site settings</b> and then enable camera settings.
@@ -23,7 +23,7 @@ const HowToUse = () => {
             <img src="login.png" alt="" className="htu-img" />
             <hr />
             <p>If <b>Not</b> then create an account on SmartBasket</p>
-            <img src="signup.png" alt="" className="htu-img"/>
+            {/* <img src="signup.png" alt="" className="htu-img"/> */}
           </div>
           <div className="htu-li">
             <h2>Scan a Product</h2>
@@ -50,7 +50,7 @@ const HowToUse = () => {
                 <li>
                   Your total amount and discounts will update automatically.
                 </li>
-                <img src="place.png" alt="" />
+                {/* <img src="place.png" alt="" /> */}
               </ul>
             </p>
           </div>
@@ -65,7 +65,7 @@ const HowToUse = () => {
                 <li>
                   Follow the payment instructions to complete your purchase.
                 </li>
-                <img src="placeorder.png" alt="" className="htu-img" />
+                {/* <img src="placeorder.png" alt="" className="htu-img" /> */}
               </ul>
             </p>
           </div>
