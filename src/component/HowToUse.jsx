@@ -65,9 +65,10 @@ const HowToUse = () => {
                 <li>
                   Follow the payment instructions to complete your purchase.
                 </li>
-                {/* <img src="placeorder.png" alt="" className="htu-img" /> */}
+                
               </ul>
             </p>
+            {/* <img src="placeorder.png" alt="" className="htu-img" /> */}
           </div>
           <div className="htu-li">
             <h2>For better Experience</h2>
