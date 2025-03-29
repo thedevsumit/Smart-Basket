@@ -20,7 +20,7 @@ const HowToUse = () => {
           <div className="htu-li">
             <h2>SignIn or SignUp</h2>
             <p>SignIn to SmartBasket if you already have account on it.</p>
-            <img src="login.png" alt="" className="htu-img" />
+            {/* <img src="login.png" alt="" className="htu-img" /> */}
             <hr />
             <p>If <b>Not</b> then create an account on SmartBasket</p>
             {/* <img src="signup.png" alt="" className="htu-img"/> */}
