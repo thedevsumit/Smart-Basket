@@ -64,3 +64,15 @@ body{
   height: 500px;
   border-radius: 10px;
 }
+.centeringimg{
+  margin: 0 auto;
+  /* background-color: red; */
+}
+.hpheading{
+  text-align: left;
+  font-size: 30px;
+  font-weight: bolder;
+  color: #3f83f8;
+  
+ 
+}
