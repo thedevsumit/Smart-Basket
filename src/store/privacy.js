@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const privacySlice = createSlice({
-    name: 'privacy',
-    initialState: false,
+const userSlice = createSlice({
+    name: 'userName',
+    initialState: { username: ""},
     reducers: {
-        toggle: (state) => {
-            return state = !state
-        }
+        newName: (state,action) => {
+            state.username = action.payload
+        },
+       
     }
 })
-export default privacySlice;
-export const privacyAction = privacySlice.actions;
+export default userSlice;
+export const userAction = userSlice.actions;

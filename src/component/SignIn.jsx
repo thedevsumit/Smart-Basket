@@ -7,8 +7,11 @@ import Swal from "sweetalert2";
 // import { firestore } from "../firebaseConfig";
 // import { addDoc, collection } from "firebase/firestore";
 import Sidebar from "./Sidebar";
+
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { userAction } from "../store/privacy";
 // import OtpInput from "react-otp-input";
 // import { useNavigate } from "react-router-dom";
 
@@ -81,7 +84,8 @@ const SignIn = ({ signInToUp, homepage,loginTOhome }) => {
   // const { loggingIn, signinData } = useContext(SignIn);
   // const navigate = useNavigate();
   // const [usernametest, setUsername] = useState("");
-
+const dispatch = useDispatch();
+const {username} = useSelector((store)=>store.userName)
   const UserNameElement = useRef();
   const passwordElement = useRef();
   const [alertMsg, setalertMsg] = useState("");
@@ -102,6 +106,9 @@ const SignIn = ({ signInToUp, homepage,loginTOhome }) => {
       await signInWithEmailAndPassword(auth, username, password);
       const user = auth.currentUser;
       console.log(user);
+      // if(user){
+      //   dispatch(userAction.newName(username))
+      // }
       loginTOhome(1); 
     } catch (error) {
       console.log(error);

@@ -7,10 +7,12 @@ import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { db } from "../firebaseConfig";
 import { setDoc,doc} from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { userAction } from "../store/privacy";
 const SignUp = ({ signInToUp, homepage,loginTOhome }) => {
   initializeApp(firebaseConfig);
   const auth = getAuth();
-
+const dispatch = useDispatch();
   const UserNameElement = useRef();
   const emailElement = useRef();
   const passwordElement = useRef();
@@ -46,7 +48,7 @@ const SignUp = ({ signInToUp, homepage,loginTOhome }) => {
       email,
       password,
       phoneno,
-      userbefore: 0,
+      
     };
 
     UserNameElement.current.value = "";
@@ -65,6 +67,7 @@ const SignUp = ({ signInToUp, homepage,loginTOhome }) => {
         username: username,
         phoneno: phoneno
       })
+      dispatch(userAction.newName(username))
     }
    } catch (error) {
     setalertIcon("error");

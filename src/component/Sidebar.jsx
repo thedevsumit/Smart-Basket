@@ -1,9 +1,20 @@
 import { useContext } from "react";
 import styles from "./Sidebar.module.css";
+import { useSelector } from "react-redux";
+import { signOut } from "firebase/auth";
+// import userdetails from "../store/userdetails";
 // import { SignIn } from "../store/SignUp-store";
-const Sidebar = ({ currLoggedInUser,changingSidebar,loginTOhome,homepage}) => {
+const Sidebar = ({ changingSidebar, loginTOhome, homepage }) => {
   // const {signinData,SignOut} = useContext(SignIn)
-  
+  const { username } = useSelector((store) => store.userName);
+  console.log(username);
+  let currLoggedInUser = username;
+  if (homepage === 0) {
+    currLoggedInUser = "";
+  }
+  const SignOut = () => {
+    console.log("Hello");
+  };
   return (
     <>
       <div className={styles["parent-main-div"]}>
@@ -11,53 +22,55 @@ const Sidebar = ({ currLoggedInUser,changingSidebar,loginTOhome,homepage}) => {
           className={`d-flex flex-column flex-shrink-0 p-3 text-bg-dark ${styles["sidebar-height"]}`}
           style={{ width: "200px" }}
         >
-          
           <div className={styles["icon-cross"]}>
-          {homepage === 1 && (<div className="dropdown">
-            <a
-              href="#"
-              className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="https://static.vecteezy.com/system/resources/previews/005/005/788/non_2x/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
-                alt=""
-                width="32"
-                height="32"
-                className="rounded-circle me-2"
-              />
-              <strong>{currLoggedInUser}</strong>
-            </a>
-            <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-              <li>
-                <a className="dropdown-item" href="#">
-                  Profile
+            {homepage === 1 && (
+              <div className="dropdown">
+                <a
+                  href="#"
+                  className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="https://static.vecteezy.com/system/resources/previews/005/005/788/non_2x/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
+                    alt=""
+                    width="32"
+                    height="32"
+                    className="rounded-circle me-2"
+                  />
+                  <strong
+                    onClick={() => {
+                      SignOut();
+                    }}
+                  >
+                    {currLoggedInUser}
+                  </strong>
                 </a>
-              </li>
-              
-             
-              <li>
-                <a className="dropdown-item" href="#" onClick={()=>{
-                  SignOut(currLoggedInUser)
-                  loginTOhome(0)
-                }}>
-                  Sign out
-                </a>
-              </li>
-            </ul>
-          </div>)}
+                {/* <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Profile
+                    </a>
+                  </li>
+
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Sign out
+                    </a>
+                  </li>
+                </ul> */}
+              </div>
+            )}
             <img
               src="https://img.icons8.com/ios11/512/FFFFFF/menu.png"
               alt=""
               className={styles["icon-img"]}
-              onClick={()=>{
-                changingSidebar(0)
+              onClick={() => {
+                changingSidebar(0);
               }}
             />
           </div>
-       
-          
+
           <hr />
           <ul className={`nav nav-pills flex-column mb-auto`}>
             <li className="nav-item">
@@ -100,11 +113,9 @@ const Sidebar = ({ currLoggedInUser,changingSidebar,loginTOhome,homepage}) => {
                 Customers
               </a>
             </li>
-            
           </ul>
-          
+
           <hr />
-          
         </div>
       </div>
     </>
