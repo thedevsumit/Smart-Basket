@@ -32,7 +32,7 @@ const {currentValue} = useSelector((store) => store.items);
           <span className={styles["one-header-smartbasket"]}>SmartBasket</span>
         </div>
         <div className={styles["two-header"]}>
-          {shoppingVar === 1 && (
+          
             <button
               type="button"
               className={`${styles["div-badge"]} btn position-relative`}
@@ -60,7 +60,7 @@ const {currentValue} = useSelector((store) => store.items);
                 <span className="visually-hidden">Check Orders</span>
               </span>
             </button>
-          )}
+          
           <img
             className={styles["two-header-img"]}
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTatOVRDENelIbuzdGYva7nrItNTvPd_pdamQ&s"
@@ -80,7 +80,7 @@ const {currentValue} = useSelector((store) => store.items);
         ></Sidebar>
       )}
         {viewCart === 1 && <ShoppingCart></ShoppingCart>}
-      {shoppingVar === 0 && (
+      {(shoppingVar === 0&viewCart===0)&& (
         <button
           type="button"
           className="btn btn-success"

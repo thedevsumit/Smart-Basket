@@ -76,7 +76,7 @@ export default function MainShoppingPage() {
             <p className="text-green-600 font-bold">{scannedData}</p>
           </div>
         )}
-      {/* <DataProvider itemList = {itemList}></DataProvider> */}
+     
       </div>
     </>
   );
