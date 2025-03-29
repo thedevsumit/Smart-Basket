@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const itemsSlice = createSlice({
     name: 'items',
-    initialState: { currentValue: [] },
+    initialState: { currentValue: [],newItem: [] },
     reducers: {
         adding: (state, action) => {
             state.currentValue.push(action.payload)
@@ -13,8 +13,8 @@ const itemsSlice = createSlice({
             state.currentValue = state.currentValue.filter((item) => item !== action.payload)
 
         },
-        reset: (state, action) => {
-            state.currentValue = []
+        itemadd: (state, action) => {
+            state.newItem = [...state.newItem, action.payload]
         },
     }
 })

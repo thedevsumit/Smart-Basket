@@ -80,7 +80,7 @@ const {currentValue} = useSelector((store) => store.items);
         ></Sidebar>
       )}
         {viewCart === 1 && <ShoppingCart></ShoppingCart>}
-      {(shoppingVar === 0&viewCart===0)&& (
+      {(shoppingVar === 0)&& (
         <button
           type="button"
           className="btn btn-success"

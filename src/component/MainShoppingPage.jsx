@@ -1,38 +1,61 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { Button } from "./ui/button";
-
 import styles from "./MainShoppingPage.module.css";
-
 import { useDispatch, useSelector } from "react-redux";
 import { itemAction } from "../store/counter";
+import { db } from "../firebaseConfig";
+import { getDoc, doc } from "firebase/firestore";
+
 export default function MainShoppingPage() {
   const [scannedData, setScannedData] = useState(null);
-  const { currentValue } = useSelector((store) => store.items);
-
   const [scanner, setScanner] = useState(null);
+  const [itemDetails, setItemDetails] = useState(null);
+  const scanningRef = useRef(false); // Prevent multiple scans
   const dispatch = useDispatch();
-    
-    const HandleAddItem = (val) => {
-      dispatch(itemAction.adding(val));
-    };
-    
+
+  console.log(itemDetails);
+
+  const handleAddItem = (val) => {
+    dispatch(itemAction.adding(val));
+  };
+
   useEffect(() => {
     return () => {
       if (scanner) {
-        scanner
-          .clear()
-          .catch((error) => alert("Error clearing scanner:", error));
+        scanner.clear().catch((error) => console.error("Error clearing scanner:", error));
       }
     };
   }, [scanner]);
 
   useEffect(() => {
-    if (scannedData && scannedData.trim() !== "") {
-      
-      HandleAddItem(scannedData);
+    if (scannedData && !scanningRef.current) {
+      scanningRef.current = true; // Prevent multiple triggers
+      fetchItemFromFirebase(scannedData);
+      handleAddItem(scannedData);
     }
   }, [scannedData]);
+
+  const fetchItemFromFirebase = async (barcode) => {
+    try {
+      console.log("Fetching barcode:", barcode);
+      const itemRef = doc(db, "MallItems", barcode);
+      const itemSnap = await getDoc(itemRef);
+
+      if (itemSnap.exists()) {
+        setItemDetails(itemSnap.data());
+        dispatch(itemAction.itemadd(itemSnap.data()));
+      } else {
+        console.warn("No item found for barcode:", barcode);
+        setItemDetails(null);
+      }
+    } catch (error) {
+      console.error("Error fetching item:", error);
+    } finally {
+      scanningRef.current = false; // Allow future scans
+    }
+  };
+
   const startScanner = () => {
     if (scanner) return;
 
@@ -43,41 +66,44 @@ export default function MainShoppingPage() {
 
     qrScanner.render(
       (decodedText) => {
-        setScannedData(decodedText);
-        qrScanner.clear();
-        setScanner(null);
+        if (!scanningRef.current) {
+          setScannedData(decodedText);
+          qrScanner.clear().then(() => setScanner(null)); // Stop scanning after first scan
+        }
       },
-      () => {}
+      (errorMessage) => {
+        if (errorMessage.includes("NotFoundException")) {
+          // Avoid infinite console logs, print error only once every 5 seconds
+          if (!scanningRef.current) {
+            console.warn("No QR code detected. Please scan a valid QR code.");
+            scanningRef.current = true;
+            setTimeout(() => {
+              scanningRef.current = false;
+            }, 5000); // Allow error message again after 5 seconds
+          }
+        } else {
+          console.warn("Scanning error:", errorMessage);
+        }
+      }
     );
 
     setScanner(qrScanner);
   };
 
   return (
-    <>
-      <div
-        className={`flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 ${styles["main-container"]}`}
-      >
-        
-        <Button
-          onClick={startScanner}
-          className={`${styles["scan-item"]} mb-4`}
-          disabled={scanner !== null}
-        >
-          {scanner ? "Scanning..." : "Open Camera & Scan Barcode"}
-        </Button>
-        <div
-          id="reader"
-          className={`w-full max-w-md ${styles["main-scanner"]}`}
-        />
-        {scannedData && (
-          <div className="mt-4 p-3 bg-white shadow rounded-lg">
-            <p className="text-lg font-medium">Scanned Data:</p>
-            <p className="text-green-600 font-bold">{scannedData}</p>
-          </div>
-        )}
-     
-      </div>
-    </>
+    <div className={`flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 ${styles["main-container"]}`}>
+      <Button onClick={startScanner} className={`${styles["scan-item"]} mb-4`} disabled={scanner !== null}>
+        {scanner ? "Scanning..." : "Open Camera & Scan Barcode"}
+      </Button>
+
+      <div id="reader" className={`w-full max-w-md ${styles["main-scanner"]}`} />
+
+      {scannedData && (
+        <div className="mt-4 p-3 bg-white shadow rounded-lg">
+          <p className="text-lg font-medium">Scanned Data:</p>
+          <p className="text-green-600 font-bold">{scannedData}</p>
+        </div>
+      )}
+    </div>
   );
 }

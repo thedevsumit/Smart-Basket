@@ -21,32 +21,36 @@ const ShoppingCart = () => {
   const HandleDecrement = () => {
     dispatch(quantityAction.decrement());
   };
+  const {newItem} = useSelector((store)=>store.items);
+  // const temp = [
+  //   {
+  //     img: "https://m.media-amazon.com/images/I/61Gyg-yEcoL._SL1100_.jpg",
+  //     title: "Ferrero Rocher Moments",
+  //     price: "₹20",
+  //     discount: "10%",
+  //     newPrice: "₹18",
+  //     description: "Ferrero Rocher Moments, 16 Pcs Chocolate,92.8 Grams",
+  //   },
+  // ];
 
-  const temp = [
-    {
-      img: "https://m.media-amazon.com/images/I/61Gyg-yEcoL._SL1100_.jpg",
-      title: "Ferrero Rocher Moments",
-      price: "₹20",
-      discount: "10%",
-      newPrice: "₹18",
-      description: "Ferrero Rocher Moments, 16 Pcs Chocolate,92.8 Grams",
-    },
-  ];
+  const temp = [newItem];
+  console.log(newItem)
   return (
     <>
       <div className="main-parent">
         <div className="container mt-4 mainpage">
           <div className="main-parent-card">
-            {temp.map((item, index) => (
+            {newItem.map((item, index) => (
               <div key={index} className="col-md-4 mb-4">
                 <div className="card">
-                  <span class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-white positioning-div ">
+                  <span className="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-white positioning-div ">
                     <RxCross2
                       className="icon-card"
                       style={{ color: "black" }}
                       size={18}
+                      onClick={() => handleSubmit(item.title)}
                     />
-                    <span class="visually-hidden">unread messages</span>
+                    <span className="visually-hidden">unread messages</span>
                   </span>
 
                   <img src={item.img} alt="" className="img-card" />
