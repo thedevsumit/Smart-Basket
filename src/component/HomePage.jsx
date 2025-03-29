@@ -103,7 +103,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
               detailed product descriptions, manage their shopping cart, and
               streamline the checkout process.
             </p>
-            <div className="d-grid gap-2 d-md-flex justify-content-md-start">
+            <div className={`${styles.buttons}`}>
               <button
                 type="button"
                 className="buyitem"

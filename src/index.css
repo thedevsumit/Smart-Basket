@@ -156,6 +156,18 @@ body {
   /* width: 980px; */
   margin: 0 auto;
 }
+.htu-main {
+  width: 90vw;
+  margin: 0 auto;
+}
+.htu-maindiv{
+  /* width: 400px; */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* align-items: center; */
+}
 @media screen and (min-width: 750px) and (max-width: 1000px) {
   .card {
     width: 400px;
@@ -180,6 +192,14 @@ body {
     flex-direction: row;
     width: 980px;
     margin: 0 auto;
+  }
+  .htu-maindiv{
+    width: 64vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* align-items: center; */
   }
   .positioning-div {
     position: relative;
@@ -208,7 +228,12 @@ body {
     width: 427px;
     height: 148px;
   }
+  .htu-main {
+    width: 64vw;
+    margin: 0 auto;
+  }
 }
+
 .buyitem {
   width: 200px;
   letter-spacing: 1px;
@@ -221,10 +246,7 @@ body {
   color: rgb(255, 255, 255);
   cursor: pointer;
 }
-.htu-main {
-  width: 64vw;
-  margin: 0 auto;
-}
+
 .htu-heading {
   text-align: left;
   font-size: 50px;
@@ -237,14 +259,7 @@ body {
   border-radius: 5px;
   padding: 2rem;
 }
-.htu-maindiv{
-  width: 64vw;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  /* align-items: center; */
-}
+
 .firsthtuli{
   margin-top: 20px;
 }
