@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { firebaseConfig } from "../firebaseConfig";
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import Spinner from "./Spinner";
 import { db } from "../firebaseConfig";
 import { setDoc,doc} from "firebase/firestore";
 import { useDispatch } from "react-redux";
@@ -15,6 +16,7 @@ const SignUp = ({ signInToUp, homepage,loginTOhome }) => {
 const dispatch = useDispatch();
   const UserNameElement = useRef();
   const emailElement = useRef();
+  const [spinnerval,setspinnerval] = useState(0)
   const passwordElement = useRef();
   const phoneNoElement = useRef();
   const [alertMsg, setalertMsg] = useState("");
@@ -25,6 +27,7 @@ const dispatch = useDispatch();
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
     const username = UserNameElement.current.value;
     const email = emailElement.current.value;
     const password = passwordElement.current.value;
@@ -55,11 +58,15 @@ const dispatch = useDispatch();
     emailElement.current.value = "";
     passwordElement.current.value = "";
     phoneNoElement.current.value = "";
-    console.log(data);
+    
    try {
+    document.querySelector(".main-container").style.opacity = "0.6";
+    setspinnerval(1)
     await createUserWithEmailAndPassword(auth, email, password);
+    setspinnerval(0)
+    document.querySelector(".main-container").style.opacity = "1";
     const user = auth.currentUser;
-    console.log(user);
+    showAlert("success", "Success", "Succesfully created account");
     loginTOhome(1);
     if(user){
       await setDoc(doc(db,"Users",user.uid),{
@@ -68,8 +75,13 @@ const dispatch = useDispatch();
         phoneno: phoneno
       })
       dispatch(userAction.newName(username))
-    }
+      localStorage.setItem("currLoggedInUser", email); 
+     }
+     
+    
    } catch (error) {
+    document.querySelector(".main-container").style.opacity = "1";
+    setspinnerval(0)
     setalertIcon("error");
     setalertMsg("Please fill in all the details first.");
     setalertTitle("Error");
@@ -123,7 +135,7 @@ const dispatch = useDispatch();
         ></Sidebar>
       )}
 
-      <div className={styles["main-login-div"]}>
+      <div className={`main-container ${styles["main-login-div"]}`}>
         <main className="form-signin w-100 m-auto">
           <form onSubmit={handleSubmit}>
             <h1 className={` ${styles["h1-color"]} h3 mb-3 fw-normal`}>
@@ -185,6 +197,7 @@ const dispatch = useDispatch();
             </button>
           </form>
         </main>
+        {spinnerval === 1 && <Spinner/>}
         <div className={`container ${styles["footer-margin"]}`}>
           <footer className="py-3 my-4">
             <ul className="nav justify-content-center border-bottom pb-3 mb-3">

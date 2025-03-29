@@ -12,7 +12,7 @@ export default function MainShoppingPage() {
 
   const [scanner, setScanner] = useState(null);
   const dispatch = useDispatch();
-    console.log(currentValue)
+    
     const HandleAddItem = (val) => {
       dispatch(itemAction.adding(val));
     };
@@ -22,14 +22,14 @@ export default function MainShoppingPage() {
       if (scanner) {
         scanner
           .clear()
-          .catch((error) => console.log("Error clearing scanner:", error));
+          .catch((error) => alert("Error clearing scanner:", error));
       }
     };
   }, [scanner]);
 
   useEffect(() => {
     if (scannedData && scannedData.trim() !== "") {
-      console.log(scannedData)
+      
       HandleAddItem(scannedData);
     }
   }, [scannedData]);

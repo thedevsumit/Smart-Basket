@@ -2,18 +2,34 @@ import { useContext } from "react";
 import styles from "./Sidebar.module.css";
 import { useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
+import { Dropdown } from "bootstrap";
+import Swal from "sweetalert2";
+
 // import userdetails from "../store/userdetails";
 // import { SignIn } from "../store/SignUp-store";
 const Sidebar = ({ changingSidebar, loginTOhome, homepage }) => {
   // const {signinData,SignOut} = useContext(SignIn)
   const { username } = useSelector((store) => store.userName);
-  console.log(username);
+ 
   let currLoggedInUser = username;
   if (homepage === 0) {
     currLoggedInUser = "";
   }
+  const showAlert = (icon, title, message) => {
+    Swal.fire({
+      title: title,
+      text: message,
+      icon: icon,
+      confirmButtonText: "OK",
+      background: "#f8f9fa",
+      color: "#000",
+      timer: 3000,
+    });
+  };
   const SignOut = () => {
-    console.log("Hello");
+    localStorage.removeItem("currLoggedInUser");
+    loginTOhome(0);
+    showAlert("success", "Success", "Logged out successfully");
   };
   return (
     <>
@@ -39,14 +55,13 @@ const Sidebar = ({ changingSidebar, loginTOhome, homepage }) => {
                     className="rounded-circle me-2"
                   />
                   <strong
-                    onClick={() => {
-                      SignOut();
-                    }}
+               
                   >
                     {currLoggedInUser}
                   </strong>
                 </a>
-                {/* <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
+              
+                <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
                   <li>
                     <a className="dropdown-item" href="#">
                       Profile
@@ -54,11 +69,11 @@ const Sidebar = ({ changingSidebar, loginTOhome, homepage }) => {
                   </li>
 
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="#" onClick={SignOut}>
                       Sign out
                     </a>
                   </li>
-                </ul> */}
+                </ul>
               </div>
             )}
             <img

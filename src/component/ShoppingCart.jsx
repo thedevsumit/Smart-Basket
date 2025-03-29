@@ -10,7 +10,7 @@ const ShoppingCart = () => {
     dispatch(itemAction.removing(val))
   }
   const { currentValue } = useSelector((store) => store.items);
-  console.log("hello",currentValue);
+  
   return (
     <div>
       <h2 className="text-center">Shopping Cart</h2>

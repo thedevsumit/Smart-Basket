@@ -1,0 +1,15 @@
+
+.logging {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    top: -70px;
+    left: 110px;   
+}
+.loggingspinner{
+    position: absolute;
+}
+
+body{
+    opacity: var(--opacity, 1);
+}

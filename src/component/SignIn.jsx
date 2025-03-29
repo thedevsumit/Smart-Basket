@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 // import { firestore } from "../firebaseConfig";
 // import { addDoc, collection } from "firebase/firestore";
 import Sidebar from "./Sidebar";
-
+import Spinner from "./Spinner";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
@@ -86,6 +86,8 @@ const SignIn = ({ signInToUp, homepage,loginTOhome }) => {
   // const [usernametest, setUsername] = useState("");
 const dispatch = useDispatch();
 const {username} = useSelector((store)=>store.userName)
+const currentuser = username;
+const [spinnerval,setspinnerval] = useState(0)
   const UserNameElement = useRef();
   const passwordElement = useRef();
   const [alertMsg, setalertMsg] = useState("");
@@ -103,15 +105,25 @@ const {username} = useSelector((store)=>store.userName)
       return;
     }
     try {
+      document.querySelector(".container-main").style.opacity = "0.6";
+      setspinnerval(1)
       await signInWithEmailAndPassword(auth, username, password);
+      setspinnerval(0)
+      showAlert("success", "Success!", "Successfully Logged In");
       const user = auth.currentUser;
-      console.log(user);
+      document.querySelector(".container-main").style.opacity = "1";
+     
       // if(user){
       //   dispatch(userAction.newName(username))
       // }
+      
+      localStorage.setItem("currLoggedInUser", username); 
       loginTOhome(1); 
+      
     } catch (error) {
-      console.log(error);
+      document.querySelector(".container-main").style.opacity = "1";
+      setspinnerval(0)
+      showAlert("error", "Error", "Invalid Credentials");
     }
     UserNameElement.current.value = "";
     passwordElement.current.value = "";
@@ -164,7 +176,7 @@ const {username} = useSelector((store)=>store.userName)
         ></Sidebar>
       )}
 
-      <div className={styles["main-login-div"]}>
+      <div className={`${styles["main-login-div"]} container-main`}>
         <main className="form-signin w-100 m-auto">
           <form onSubmit={handleSubmit}>
             <h1 className={` ${styles["h1-color"]} h3 mb-3 fw-normal`}>
@@ -191,7 +203,7 @@ const {username} = useSelector((store)=>store.userName)
               />
               <label htmlFor="floatingPassword">Password</label>
             </div>
-
+            
             <div
               className={styles["signin-color"]}
               onClick={() => {
@@ -206,6 +218,7 @@ const {username} = useSelector((store)=>store.userName)
             </button>
           </form>
         </main>
+        {spinnerval === 1 && <Spinner/>}
         <div className={`container ${styles["footer-margin"]}`}>
           <footer className="py-3 my-4">
             <ul className="nav justify-content-center border-bottom pb-3 mb-3">

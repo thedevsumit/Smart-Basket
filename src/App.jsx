@@ -22,16 +22,16 @@ function App() {
   const [userdetails, setUserDetails] = useState(null);
   const fetchUserData = async () => { 
   auth.onAuthStateChanged(async (user) => {
-  console.log(user);
+  
   const docRef = doc(db,"Users",user.uid);
   const docSnap = await getDoc(docRef);
   if(docSnap.exists()){
     setUserDetails(docSnap.data())
-    console.log(docSnap.data())
+    
     const userData = docSnap.data();
     dispatch(userAction.newName(userData.username))
   }else{
-    console.log("Not logged in")
+    
   }
       });
     }
