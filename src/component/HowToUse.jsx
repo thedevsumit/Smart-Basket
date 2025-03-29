@@ -22,7 +22,7 @@ const HowToUse = () => {
             <p>SignIn to SmartBasket if you already have account on it.</p>
             {/* <img src="login.png" alt="" className="htu-img" /> */}
             <hr />
-            <p>If <b>Not</b> then create an account on SmartBasket</p>
+            <p>If <b>NOT</b> then create an account on SmartBasket</p>
             {/* <img src="signup.png" alt="" className="htu-img"/> */}
           </div>
           <div className="htu-li">
@@ -43,10 +43,10 @@ const HowToUse = () => {
             <p>
               <ul>
                 <li>
-                  Increase or decrease the quantity of items using the "+" or
-                  "-" buttons.
+                  Increase or decrease the quantity of items using the <b>"+" or
+                  "-"</b> buttons.
                 </li>
-                <li>Remove an item by clicking the "X" button.</li>
+                <li>Remove an item by clicking the <b>"X"</b> button.</li>
                 <li>
                   Your total amount and discounts will update automatically.
                 </li>
@@ -58,9 +58,9 @@ const HowToUse = () => {
             <h2>Checkout & Place Order</h2>
             <p>
               <ul>
-                <li>Review your cart in the "Price Details" section.</li>
+                <li>Review your cart in the <b>"Price Details"</b> section.</li>
                 <li>
-                  Click the "PLACE ORDER" button to proceed with checkout.
+                  Click the <b>"PLACE ORDER"</b> button to proceed with checkout.
                 </li>
                 <li>
                   Follow the payment instructions to complete your purchase.
@@ -75,14 +75,14 @@ const HowToUse = () => {
             <p>
               <ul>
                 <li>
-                  ✅ Ensure your device camera is clean and has good lighting.
+                 Ensure your <b>device camera is clean</b> and has good lighting.
                 </li>
                 <li>
-                  ✅ If a product is not recognized, try scanning again or
+                   If a product is not recognized,<b> try scanning again</b> or
                   entering details manually.
                 </li>
                 <li>
-                  ✅ Use the cart feature to track total spending and discounts.
+                  Use the cart feature to track total spending and discounts.
                 </li>
               </ul>
             </p>
