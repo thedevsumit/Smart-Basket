@@ -81,3 +81,12 @@ body{
   gap: 10px;
 
 }
+.homeicon{
+  position: relative;
+  top: -1px;
+}
+.homeparent{
+  position: relative;
+  top: -1px;
+  left: 5px;
+}

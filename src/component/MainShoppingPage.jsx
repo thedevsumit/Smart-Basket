@@ -14,7 +14,7 @@ export default function MainShoppingPage() {
   const scanningRef = useRef(false); // Prevent multiple scans
   const dispatch = useDispatch();
 
-  console.log(itemDetails);
+  
 
   const handleAddItem = (val) => {
     dispatch(itemAction.adding(val));
@@ -38,7 +38,7 @@ export default function MainShoppingPage() {
 
   const fetchItemFromFirebase = async (barcode) => {
     try {
-      console.log("Fetching barcode:", barcode);
+      
       const itemRef = doc(db, "MallItems", barcode);
       const itemSnap = await getDoc(itemRef);
 
@@ -46,11 +46,11 @@ export default function MainShoppingPage() {
         setItemDetails(itemSnap.data());
         dispatch(itemAction.itemadd(itemSnap.data()));
       } else {
-        console.warn("No item found for barcode:", barcode);
+        
         setItemDetails(null);
       }
     } catch (error) {
-      console.error("Error fetching item:", error);
+     
     } finally {
       scanningRef.current = false; // Allow future scans
     }
@@ -73,16 +73,16 @@ export default function MainShoppingPage() {
       },
       (errorMessage) => {
         if (errorMessage.includes("NotFoundException")) {
-          // Avoid infinite console logs, print error only once every 5 seconds
+         
           if (!scanningRef.current) {
-            console.warn("No QR code detected. Please scan a valid QR code.");
+          
             scanningRef.current = true;
             setTimeout(() => {
               scanningRef.current = false;
             }, 5000); // Allow error message again after 5 seconds
           }
         } else {
-          console.warn("Scanning error:", errorMessage);
+        
         }
       }
     );

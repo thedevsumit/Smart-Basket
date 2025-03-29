@@ -34,7 +34,7 @@ const ShoppingCart = () => {
   // ];
 
   const temp = [newItem];
-  console.log(newItem)
+ 
   return (
     <>
       <div className="main-parent">

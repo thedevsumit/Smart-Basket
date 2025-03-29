@@ -6,6 +6,7 @@ import MainShoppingPage from "./MainShoppingPage";
 import { useSelector } from "react-redux";
 import Footer from "./Footer";
 import HowToUse from "./HowToUse";
+import { IoHomeSharp } from "react-icons/io5";
 // import { SignIn } from "../store/SignUp-store";
 // import MainShoppingPage from "./MainShoppingPage";
 // import ShoppingCart from "./ShoppingCart";
@@ -17,8 +18,8 @@ const HomePage = ({ loginTOhome, homepage }) => {
   const changingSidebar = (customVal) => {
     setsidebar(customVal);
   };
-  // const [shoppingVar, setshoppingVar] = useState(0);
-  // const [viewCart, setviewCart] = useState(0);
+  const [shoppingVar, setshoppingVar] = useState(0);
+  const [viewCart, setviewCart] = useState(0);
   const changingviewCart = (customVal) => {
     setviewCart(customVal);
   };
@@ -34,6 +35,17 @@ const HomePage = ({ loginTOhome, homepage }) => {
           <span className={styles["one-header-smartbasket"]}>SmartBasket</span>
         </div>
         <div className={styles["two-header"]}>
+        
+          <button
+            type="button"
+            className={`btn position-relative ${styles.homeparent}`}
+          >
+            <IoHomeSharp size={21} className={`${styles.homeicon}`} onClick={()=>{
+          setshoppingVar(0)
+          setviewCart(0)
+        }}/>
+            
+          </button>
           <button
             type="button"
             className={`${styles["div-badge"]} btn position-relative`}
@@ -43,8 +55,13 @@ const HomePage = ({ loginTOhome, homepage }) => {
               src="https://media.istockphoto.com/id/1206806317/vector/shopping-cart-icon-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=1RRQJs5NDhcB67necQn1WCpJX2YMfWZ4rYi1DFKlkNA="
               alt="cart"
               onClick={() => {
-                // setviewCart(1);
-                // setshoppingVar(0);
+               if(viewCart===0){
+                setviewCart(1);
+                setshoppingVar(0);
+               }else{
+                setviewCart(0);
+                setshoppingVar(1);
+               }
               }}
             />
             <span
@@ -74,63 +91,64 @@ const HomePage = ({ loginTOhome, homepage }) => {
       </div>
       {sidebar === 1 && (
         <Sidebar
-          // currLoggedInUser={currLoggedInUser}
+          
           changingSidebar={changingSidebar}
           loginTOhome={loginTOhome}
           homepage={homepage}
         ></Sidebar>
       )}
-      {/* {true && <ShoppingCart></ShoppingCart>} */}
-      <div className="container col-xxl-8 px-4 py-5">
-        <div className="row flex-lg-row-reverse align-items-center g-5 py-5">
-          <div className={`col-10 col-sm-8 col-lg-6 ${styles.centeringimg}`}>
-            <img
-              src="homeimage.png"
-              className={`d-block mx-lg-auto img-fluid `}
-              alt="Bootstrap Themes"
-              width="600"
-              height="700"
-              loading="lazy"
-            />
-          </div>
-          <div className="col-lg-6 ">
-            <h1 className={`${styles.hpheading}`}>Welcome to SmartBasket</h1>
-            <p className="lead">
-              SmartBasket is an intelligent shopping solution designed to
-              enhance the retail experience by integrating barcode scanning,
-              automated cart management, and real-time product information. It
-              allows users to scan products using their smartphones, view
-              detailed product descriptions, manage their shopping cart, and
-              streamline the checkout process.
-            </p>
-            <div className={`${styles.buttons}`}>
-              <button
-                type="button"
-                className="buyitem"
-                onClick={() => {
-                  // setshoppingVar(1);
-                  // setviewCart(0);
-                }}
+      {viewCart === 1 && <ShoppingCart></ShoppingCart>}
+      {!(shoppingVar === 0^viewCart===0) && (
+        <div>
+          <div className="container col-xxl-8 px-4 py-5">
+            <div className="row flex-lg-row-reverse align-items-center g-5 py-5">
+              <div
+                className={`col-10 col-sm-8 col-lg-6 ${styles.centeringimg}`}
               >
-                CONNECTED MALLS
-              </button>
-              <button
-                type="button"
-                className="buyitem"
-                onClick={() => {
-                  // setshoppingVar(1);
-                  // setviewCart(0);
-                }}
-              >
-                START BUYING
-              </button>
+                <img
+                  src="homeimage.png"
+                  className={`d-block mx-lg-auto img-fluid `}
+                  alt="Bootstrap Themes"
+                  width="600"
+                  height="700"
+                  loading="lazy"
+                />
+              </div>
+              <div className="col-lg-6 ">
+                <h1 className={`${styles.hpheading}`}>
+                  Welcome to SmartBasket
+                </h1>
+                <p className="lead">
+                  SmartBasket is an intelligent shopping solution designed to
+                  enhance the retail experience by integrating barcode scanning,
+                  automated cart management, and real-time product information.
+                  It allows users to scan products using their smartphones, view
+                  detailed product descriptions, manage their shopping cart, and
+                  streamline the checkout process.
+                </p>
+                <div className={`${styles.buttons}`}>
+                  <button type="button" className="buyitem">
+                    CONNECTED MALLS
+                  </button>
+                  <button
+                    type="button"
+                    className="buyitem"
+                    onClick={() => {
+                      setshoppingVar(1);
+                      setviewCart(0);
+                    }}
+                  >
+                    START BUYING
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+          <HowToUse />
         </div>
-      </div>
-      <HowToUse/>
+      )}
+      {shoppingVar === 1 && <MainShoppingPage></MainShoppingPage>}
       <Footer />
-      {/* {1 && <MainShoppingPage></MainShoppingPage>} */}
     </>
   );
 };
