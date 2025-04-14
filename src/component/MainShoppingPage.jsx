@@ -80,11 +80,12 @@ export default function MainShoppingPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8fafc] px-4 text-center">
+    <div className={`flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 mt-20 ${styles["main-container-shop"]}`}>
+
       <motion.h1
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="text-4xl md:text-5xl font-bold mb-2 text-gray-800"
+        className="text-4xl md:text-5xl font-bold mb-2 text-gray-800 "
       >
         Welcome to <span className="text-green-600">SmartBasket</span>
       </motion.h1>
