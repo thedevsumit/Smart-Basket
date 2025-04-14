@@ -10,3 +10,22 @@
 .scan-item{
     background-color: green;
 }
+.btn-place-order {
+    width: 300px;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 2px;
+    border-width: 0px;
+    padding: 10px 16px;
+    background-color: #3f83f8;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+  }
+  /* .main-scanner {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+  } */
+  
+ 
