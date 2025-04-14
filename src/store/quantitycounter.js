@@ -5,7 +5,7 @@ const quantitySlice = createSlice({
     initialState: { currentvalue: 1 },
     reducers: {
         increment: (state, action) => {
-            state.currentvalue++;
+          
             
 
         },

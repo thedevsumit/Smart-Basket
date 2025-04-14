@@ -39,12 +39,14 @@ export default function MainShoppingPage() {
   const fetchItemFromFirebase = async (barcode) => {
     try {
       
-      const itemRef = doc(db, "MallItems", barcode);
+      const itemRef = doc(db, "Mallitems", barcode);
       const itemSnap = await getDoc(itemRef);
 
       if (itemSnap.exists()) {
-        setItemDetails(itemSnap.data());
-        dispatch(itemAction.itemadd(itemSnap.data()));
+        let data = itemSnap.data()
+        data.quantity = 1;
+       
+        dispatch(itemAction.itemadd(data));
       } else {
         
         setItemDetails(null);

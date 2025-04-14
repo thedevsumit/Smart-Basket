@@ -14,33 +14,41 @@ const ShoppingCart = () => {
     dispatch(itemAction.removing(val));
   };
   const { currentValue } = useSelector((store) => store.items);
-  const { currentvalue } = useSelector((store) => store.quantity);
-  const HandleIncrement = () => {
-    dispatch(quantityAction.increment());
-  };
-  const HandleDecrement = () => {
-    dispatch(quantityAction.decrement());
-  };
-  const {newItem} = useSelector((store)=>store.items);
-  // const temp = [
-  //   {
-  //     img: "https://m.media-amazon.com/images/I/61Gyg-yEcoL._SL1100_.jpg",
-  //     title: "Ferrero Rocher Moments",
-  //     price: "₹20",
-  //     discount: "10%",
-  //     newPrice: "₹18",
-  //     description: "Ferrero Rocher Moments, 16 Pcs Chocolate,92.8 Grams",
-  //   },
-  // ];
 
-  const temp = [newItem];
- 
+  const HandleIncrement = (item) => {
+    dispatch(itemAction.incrementQuantity(item.title));
+  };
+
+  const HandleDecrement = (item) => {
+    dispatch(itemAction.decrementQuantity(item.title));
+  };
+
+  const { newItem } = useSelector((store) => store.items);
+  const temp = newItem;
+
+  const totalMRP = temp.reduce((sum, item) => {
+    return sum + parseInt(item.price.replace("₹", "")) * item.quantity;
+  }, 0);
+
+  const totalDiscount = temp.reduce((sum, item) => {
+    const original = parseInt(item.price.replace("₹", ""));
+    const discounted = parseInt(item.newPrice.replace("₹", ""));
+    return sum + (original - discounted) * item.quantity;
+  }, 0);
+  const handleSubmitRemove = (title) => {
+   
+    dispatch(itemAction.removingFromCart(title));
+  };
+
+  const convenienceFee = 99;
+  const totalAmount = totalMRP - totalDiscount + convenienceFee;
+
   return (
     <>
       <div className="main-parent">
         <div className="container mt-4 mainpage">
           <div className="main-parent-card">
-            {newItem.map((item, index) => (
+            {temp.map((item, index) => (
               <div key={index} className="col-md-4 mb-4">
                 <div className="card">
                   <span className="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-white positioning-div ">
@@ -48,8 +56,9 @@ const ShoppingCart = () => {
                       className="icon-card"
                       style={{ color: "black" }}
                       size={18}
-                      onClick={() => handleSubmit(item.title)}
+                      onClick={() => handleSubmitRemove(item.title)}
                     />
+
                     <span className="visually-hidden">unread messages</span>
                   </span>
 
@@ -58,15 +67,14 @@ const ShoppingCart = () => {
                     <h5 className="card-title card-heading">{item.title}</h5>
                     <p className="card-description">{item.description}</p>
                     <div className="quantitydiv">
-                      
-                      Qty: {currentvalue}
+                      Qty: {item.quantity}
                       <IoMdAdd
                         className="addquantity"
-                        onClick={HandleIncrement}
-                      />{" "}
+                        onClick={() => HandleIncrement(item)}
+                      />
                       <RiSubtractLine
                         className="decreasequan"
-                        onClick={HandleDecrement}
+                        onClick={() => HandleDecrement(item)}
                       />
                     </div>
                     <div className="price-card">
@@ -85,25 +93,27 @@ const ShoppingCart = () => {
           <div className="price-header">PRICE DETAILS ( Items) </div>
           <div className="price-item">
             <span className="price-item-tag">Total MRP</span>
-            <span className="price-item-value">₹4003</span>
+            <span className="price-item-value">₹{totalMRP}</span>
           </div>
           <div className="price-item">
             <span className="price-item-tag">Discount on MRP</span>
             <span className="price-item-value priceDetail-base-discount">
-              -₹402
+              -₹{totalDiscount}
             </span>
           </div>
           <div className="price-item">
             <span className="price-item-tag">Convenience Fee</span>
-            <span className="price-item-value">₹99</span>
+            <span className="price-item-value">₹{convenienceFee}</span>
           </div>
 
           <div className="price-footer">
             <span className="price-item-tag">Total Amount</span>
-            <span className="price-item-value">₹3001 </span>
+            <span className="price-item-value">₹{totalAmount}</span>
           </div>
           <button className="btn-place-order mt-4">
-            <div className="css-xjhrni">PLACE ORDER</div>
+            <div className="css-xjhrni" onClick={()=>{
+              alert("Working on it soon")
+            }}>PLACE ORDER</div>
           </button>
         </div>
       </div>

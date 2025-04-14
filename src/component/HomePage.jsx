@@ -7,14 +7,13 @@ import { useSelector } from "react-redux";
 import Footer from "./Footer";
 import HowToUse from "./HowToUse";
 import { IoHomeSharp } from "react-icons/io5";
-// import { SignIn } from "../store/SignUp-store";
-// import MainShoppingPage from "./MainShoppingPage";
-// import ShoppingCart from "./ShoppingCart";
+
 const HomePage = ({ loginTOhome, homepage }) => {
   const [sidebar, setsidebar] = useState(0);
   const { currentValue } = useSelector((store) => store.items);
-  // const { itemList } = useContext(SignIn);
-  // const { currLoggedInUser } = useContext(SignIn);
+  const { newItem } = useSelector((store) => store.items);
+
+
   const changingSidebar = (customVal) => {
     setsidebar(customVal);
   };
@@ -76,7 +75,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
                 padding: "5px 8px",
               }}
             >
-              {currentValue.length}
+              {newItem.length}
               <span className="visually-hidden">Check Orders</span>
             </span>
           </button>
