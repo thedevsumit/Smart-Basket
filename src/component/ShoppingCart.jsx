@@ -58,8 +58,8 @@ const ShoppingCart = () => {
                     <h5 className="card-title card-heading">{item.title}</h5>
                     <p className="card-description">{item.description}</p>
                     <div className="quantitydiv">
-                      {" "}
-                      Qty: {currentvalue}{" "}
+                      
+                      Qty: {currentvalue}
                       <IoMdAdd
                         className="addquantity"
                         onClick={HandleIncrement}

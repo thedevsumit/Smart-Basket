@@ -35,16 +35,18 @@ const HomePage = ({ loginTOhome, homepage }) => {
           <span className={styles["one-header-smartbasket"]}>SmartBasket</span>
         </div>
         <div className={styles["two-header"]}>
-        
           <button
             type="button"
             className={`btn position-relative ${styles.homeparent}`}
           >
-            <IoHomeSharp size={21} className={`${styles.homeicon}`} onClick={()=>{
-          setshoppingVar(0)
-          setviewCart(0)
-        }}/>
-            
+            <IoHomeSharp
+              size={21}
+              className={`${styles.homeicon}`}
+              onClick={() => {
+                setshoppingVar(0);
+                setviewCart(0);
+              }}
+            />
           </button>
           <button
             type="button"
@@ -55,13 +57,13 @@ const HomePage = ({ loginTOhome, homepage }) => {
               src="https://media.istockphoto.com/id/1206806317/vector/shopping-cart-icon-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=1RRQJs5NDhcB67necQn1WCpJX2YMfWZ4rYi1DFKlkNA="
               alt="cart"
               onClick={() => {
-               if(viewCart===0){
-                setviewCart(1);
-                setshoppingVar(0);
-               }else{
-                setviewCart(0);
-                setshoppingVar(1);
-               }
+                if (viewCart === 0) {
+                  setviewCart(1);
+                  setshoppingVar(0);
+                } else {
+                  setviewCart(0);
+                  setshoppingVar(1);
+                }
               }}
             />
             <span
@@ -91,14 +93,13 @@ const HomePage = ({ loginTOhome, homepage }) => {
       </div>
       {sidebar === 1 && (
         <Sidebar
-          
           changingSidebar={changingSidebar}
           loginTOhome={loginTOhome}
           homepage={homepage}
         ></Sidebar>
       )}
       {viewCart === 1 && <ShoppingCart></ShoppingCart>}
-      {!(shoppingVar === 0^viewCart===0) && (
+      {!((shoppingVar === 0) ^ (viewCart === 0)) && (
         <div>
           <div className="container col-xxl-8 px-4 py-5">
             <div className="row flex-lg-row-reverse align-items-center g-5 py-5">
