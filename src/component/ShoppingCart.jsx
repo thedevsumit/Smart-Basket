@@ -45,8 +45,10 @@ const ShoppingCart = () => {
 
   return (
     <>
+    
+
       <div className="main-parent">
-        <div className="container mt-4 mainpage">
+        {temp.length!== 0 && <div className="container mt-4 mainpage">
           <div className="main-parent-card">
             {temp.map((item, index) => (
               <div key={index} className="col-md-4 mb-4">
@@ -87,8 +89,10 @@ const ShoppingCart = () => {
               </div>
             ))}
           </div>
-        </div>
 
+        </div>}
+        {temp.length === 0 &&    <div className="main-parent-card"><h4 className="header-cart">NO ITEMS IN CART YET</h4></div>}
+      
         <div className="bag-details-container">
           <div className="price-header">PRICE DETAILS ( Items) </div>
           <div className="price-item">
