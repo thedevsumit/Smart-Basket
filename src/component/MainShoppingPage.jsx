@@ -87,7 +87,7 @@ export default function MainShoppingPage() {
         animate={{ y: 0, opacity: 1 }}
         className="text-4xl md:text-5xl font-bold mb-2 text-gray-800 "
       >
-        Welcome to <span className="text-green-600">SmartBasket</span>
+      <span  className={styles.textcolor}>  Welcome to SmartBasket</span>
       </motion.h1>
       <p className="text-gray-600 text-lg mb-6">
         Scan your item barcode below to add it to your cart.
