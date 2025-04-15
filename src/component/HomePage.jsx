@@ -26,6 +26,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
     setProfile(0);
     setSettings(0);
     setTeam(0);
+    setSidebar(0)
   };
   
   const handleHomeClick = () => {
