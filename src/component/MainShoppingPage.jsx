@@ -133,7 +133,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { Button } from "./ui/button";
 import styles from "./MainShoppingPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { itemAction } from "../store/itmehandler";
+import { itemAction } from "../store/counter";
 import { db } from "../firebaseConfig";
 import { getDoc, doc } from "firebase/firestore";
 
