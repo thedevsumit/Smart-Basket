@@ -285,3 +285,13 @@ body {
   color: #3f83f8;
   margin: auto;
 }
+.sidebart{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.spec{
+  margin: 0 auto;
+  margin-right: 14px;
+}

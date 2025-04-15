@@ -10,8 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.6.1",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^5.3.5",
     "firebase": "^11.5.0",
     "framer-motion": "^12.7.2",
     "html5-qrcode": "^2.3.8",

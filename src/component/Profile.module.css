@@ -1,0 +1,83 @@
+.profileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.profileCard {
+  background: #fefefe;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: center;
+}
+
+.avatar {
+  width: 100px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.profileInfo {
+  text-align: left;
+  margin-top: 1rem;
+}
+
+.profileInfo label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.profileInfo p {
+  background: #f3f3f3;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.buttonGroup {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.editBtn,
+.saveBtn,
+.logoutBtn {
+  width: 200px;
+  letter-spacing: 1px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 2px;
+  border-width: 0px;
+  padding: 10px 16px;
+  background-color: #3f83f8;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.editBtn {
+  background-color: #007bff;
+  color: white;
+}
+
+.saveBtn {
+  background-color: #28a745;
+  color: white;
+}
+
+.logoutBtn {
+  background-color: #dc3545;
+  /* color: white; */
+}
