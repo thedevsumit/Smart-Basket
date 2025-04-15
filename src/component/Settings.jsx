@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Settings = () => {
+const Settings = ({sidebar,setSidebar}) => {
   const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState(true);
   const [emailUpdates, setEmailUpdates] = useState(false);
@@ -36,7 +36,11 @@ const Settings = () => {
   };
 
   return (
-    <div style={currentStyles.container}>
+    <div style={currentStyles.container}  onClick={() => {
+      if (sidebar === 1) {
+        setSidebar(0);
+      }
+    }}>
       <h2 style={styles.heading}>Settings</h2>
 
       <div style={styles.option}>

@@ -4,7 +4,7 @@ import { db } from "../firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Swal from "sweetalert2";
 import Settings from "./Settings";
-const Profile = ({loginTOhome}) => {
+const Profile = ({loginTOhome,sidebar,setSidebar}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -53,7 +53,11 @@ const Profile = ({loginTOhome}) => {
     });
   };
   return (
-    <div className={styles.profileContainer}>
+    <div className={styles.profileContainer}  onClick={() => {
+      if (sidebar === 1) {
+        setSidebar(0);
+      }
+    }}>
 
       <div className={styles.profileCard}>
         <img

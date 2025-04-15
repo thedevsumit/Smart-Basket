@@ -7,7 +7,7 @@ import { RxCross2 } from "react-icons/rx";
 import { IoMdAdd } from "react-icons/io";
 import { RiSubtractLine } from "react-icons/ri";
 import { quantityAction } from "../store/quantitycounter";
-const ShoppingCart = () => {
+const ShoppingCart = ({ sidebar, setSidebar }) => {
   const dispatch = useDispatch();
   const handleSubmit = (val) => {
     alert("Item Removed from Cart");
@@ -36,7 +36,6 @@ const ShoppingCart = () => {
     return sum + (original - discounted) * item.quantity;
   }, 0);
   const handleSubmitRemove = (title) => {
-   
     dispatch(itemAction.removingFromCart(title));
   };
 
@@ -45,54 +44,64 @@ const ShoppingCart = () => {
 
   return (
     <>
-    
-
-      <div className="main-parent">
-        {temp.length!== 0 && <div className="container mt-4 mainpage">
-          <div className="main-parent-card">
-            {temp.map((item, index) => (
-              <div key={index} className="col-md-4 mb-4">
-                <div className="card">
-                  <span className="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-white positioning-div ">
-                    <RxCross2
-                      className="icon-card"
-                      style={{ color: "black" }}
-                      size={18}
-                      onClick={() => handleSubmitRemove(item.title)}
-                    />
-
-                    <span className="visually-hidden">unread messages</span>
-                  </span>
-
-                  <img src={item.img} alt="" className="img-card" />
-                  <div className="card-body">
-                    <h5 className="card-title card-heading">{item.title}</h5>
-                    <p className="card-description">{item.description}</p>
-                    <div className="quantitydiv">
-                      Qty: {item.quantity}
-                      <IoMdAdd
-                        className="addquantity"
-                        onClick={() => HandleIncrement(item)}
+      <div
+        className="main-parent"
+        onClick={() => {
+          if (sidebar === 1) {
+            setSidebar(0);
+          }
+        }}
+      >
+        {temp.length !== 0 && (
+          <div className="container mt-4 mainpage">
+            <div className="main-parent-card">
+              {temp.map((item, index) => (
+                <div key={index} className="col-md-4 mb-4">
+                  <div className="card">
+                    <span className="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-white positioning-div ">
+                      <RxCross2
+                        className="icon-card"
+                        style={{ color: "black" }}
+                        size={18}
+                        onClick={() => handleSubmitRemove(item.title)}
                       />
-                      <RiSubtractLine
-                        className="decreasequan"
-                        onClick={() => HandleDecrement(item)}
-                      />
-                    </div>
-                    <div className="price-card">
-                      <p className="newprice">{item.newPrice}</p>
-                      <p className="oldprice">{item.price}</p>
-                      <p className="discount">{item.discount}OFF</p>
+
+                      <span className="visually-hidden">unread messages</span>
+                    </span>
+
+                    <img src={item.img} alt="" className="img-card" />
+                    <div className="card-body">
+                      <h5 className="card-title card-heading">{item.title}</h5>
+                      <p className="card-description">{item.description}</p>
+                      <div className="quantitydiv">
+                        Qty: {item.quantity}
+                        <IoMdAdd
+                          className="addquantity"
+                          onClick={() => HandleIncrement(item)}
+                        />
+                        <RiSubtractLine
+                          className="decreasequan"
+                          onClick={() => HandleDecrement(item)}
+                        />
+                      </div>
+                      <div className="price-card">
+                        <p className="newprice">{item.newPrice}</p>
+                        <p className="oldprice">{item.price}</p>
+                        <p className="discount">{item.discount}OFF</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+        )}
+        {temp.length === 0 && (
+          <div className="main-parent-card">
+            <h4 className="header-cart">NO ITEMS IN CART YET</h4>
+          </div>
+        )}
 
-        </div>}
-        {temp.length === 0 &&    <div className="main-parent-card"><h4 className="header-cart">NO ITEMS IN CART YET</h4></div>}
-      
         <div className="bag-details-container">
           <div className="price-header">PRICE DETAILS ( Items) </div>
           <div className="price-item">
@@ -115,9 +124,14 @@ const ShoppingCart = () => {
             <span className="price-item-value">₹{totalAmount}</span>
           </div>
           <button className="btn-place-order mt-4">
-            <div className="css-xjhrni" onClick={()=>{
-              alert("Working on it soon")
-            }}>PLACE ORDER</div>
+            <div
+              className="css-xjhrni"
+              onClick={() => {
+                alert("Working on it soon");
+              }}
+            >
+              PLACE ORDER
+            </div>
           </button>
         </div>
       </div>

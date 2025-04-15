@@ -187,7 +187,7 @@ const dispatch = useDispatch();
               className={styles["signin-color"]}
               onClick={() => {
                 signInToUp("SignUp");
-                // navigate("/signup");
+               
               }}
             >
               Sign In

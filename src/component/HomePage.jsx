@@ -9,50 +9,62 @@ import HowToUse from "./HowToUse";
 import { IoHomeSharp } from "react-icons/io5";
 import Profile from "./Profile";
 import Settings from "./Settings";
-
+import Team from "./Team";
 const HomePage = ({ loginTOhome, homepage }) => {
   const [sidebar, setSidebar] = useState(0);
   const [shoppingVar, setShoppingVar] = useState(0);
   const [viewCart, setViewCart] = useState(0);
   const [profile, setProfile] = useState(0);
   const [settings, setSettings] = useState(0);
+  const [team, setTeam] = useState(0);
 
   const { newItem } = useSelector((store) => store.items);
 
+  const resetAllViews = () => {
+    setShoppingVar(0);
+    setViewCart(0);
+    setProfile(0);
+    setSettings(0);
+    setTeam(0);
+  };
+  
   const handleHomeClick = () => {
-    setShoppingVar(0);
-    setViewCart(0);
-    setProfile(0);
-    setSettings(0);
+    resetAllViews();
   };
-
+  
   const handleCartClick = () => {
-    setViewCart((prev) => (!prev ? 1 : 0));
-    setShoppingVar(0);
-    setProfile(0);
-    setSettings(0);
+    resetAllViews();
+    setViewCart(1);
   };
-
+  
   const handleProfileClick = () => {
+    resetAllViews();
     setProfile(1);
-    setViewCart(0);
-    setShoppingVar(0);
-    setSettings(0);
   };
+  
+  const handleTeamClick = () => {
+    resetAllViews();
+    setTeam(1);
+  };
+  
   const handleSettingsClick = () => {
-    setSettings((prev) => (!prev ? 1 : 0));
-    setProfile(0);
-    setViewCart(0);
-    setShoppingVar(0);
+    resetAllViews();
+    setSettings(1);
   };
-
   const toggleSidebar = (val) => {
     setSidebar(val);
   };
 
   return (
     <>
-      <div className={styles["main-header"]}>
+      <div
+        className={styles["main-header"]}
+        onClick={() => {
+          if (sidebar === 1) {
+            setSidebar(0);
+          }
+        }}
+      >
         <div className={styles["one-header"]}>
           <img
             className={styles["one-header-img-smartbasket"]}
@@ -114,19 +126,32 @@ const HomePage = ({ loginTOhome, homepage }) => {
           homepage={homepage}
           handleCartClick={handleCartClick}
           handleSettingsClick={handleSettingsClick}
+          handleTeamClick={handleTeamClick}
         />
       )}
 
       {profile === 1 ? (
-        <Profile loginTOhome={loginTOhome} />
+        <Profile
+          loginTOhome={loginTOhome}
+          sidebar={sidebar}
+          setSidebar={setSidebar}
+        />
       ) : settings === 1 ? (
-        <Settings />
+        <Settings sidebar={sidebar} setSidebar={setSidebar} />
       ) : viewCart === 1 ? (
-        <ShoppingCart />
+        <ShoppingCart sidebar={sidebar} setSidebar={setSidebar} />
       ) : shoppingVar === 1 ? (
-        <MainShoppingPage />
+        <MainShoppingPage sidebar={sidebar} setSidebar={setSidebar} />
+      ) : team === 1 ? (
+        <Team sidebar={sidebar} setSidebar={setSidebar}/>
       ) : (
-        <div>
+        <div
+          onClick={() => {
+            if (sidebar === 1) {
+              setSidebar(0);
+            }
+          }}
+        >
           <div className="container col-xxl-8 px-4 py-5">
             <div className="row flex-lg-row-reverse align-items-center g-5 py-5">
               <div
@@ -170,7 +195,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
           <HowToUse />
         </div>
       )}
-      <Footer />
+      <Footer sidebar={sidebar} setSidebar={setSidebar} />
     </>
   );
 };
