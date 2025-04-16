@@ -37,11 +37,11 @@ const Contact = ({ sidebar, setSidebar }) => {
     };
 
     emailjs
-      .send(
-        "service_41",
-        "template_mrwcdgx",
+    .send(
+        "service_2bir0fc",
+        "template_fzhwgjl",
         templateParams,
-        "8bgUJXuM2jp3zyjw6"
+        "SvdB5ZoOGJGZYa3Qb"
       )
       .then(() => {
         Swal.fire(
