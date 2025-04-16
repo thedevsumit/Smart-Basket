@@ -28,10 +28,10 @@ export default function MainShoppingPage() {
         data.quantity = 1;
         dispatch(itemAction.itemadd(data));
       } else {
-        console.log("Item not found in database");
+       
       }
     } catch (error) {
-      console.error("Error fetching item:", error);
+     
     } finally {
       scanningRef.current = false;
     }
@@ -61,14 +61,13 @@ export default function MainShoppingPage() {
             .clear()
             .then(() => {
               scannerRef.current = null;
-              document.getElementById("reader").innerHTML = ""; // clear old scanner UI
+              document.getElementById("reader").innerHTML = ""; 
             })
-            .catch((err) => console.error("Failed to clear scanner:", err));
+        
         }
       },
       (errorMessage) => {
-        // You can log scanning errors here if needed
-        console.log("Scan error:", errorMessage);
+      
       }
     );
 
@@ -83,7 +82,7 @@ export default function MainShoppingPage() {
           .then(() => {
             scannerRef.current = null;
           })
-          .catch((err) => console.error("Cleanup error:", err));
+          
       }
     };
   }, []);

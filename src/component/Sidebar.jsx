@@ -11,6 +11,8 @@ import { RiTeamFill } from "react-icons/ri";
 import { GoCodeOfConduct } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import { FaLink } from "react-icons/fa";
+import { MdContactSupport } from "react-icons/md";
+
 const Sidebar = ({
   changingSidebar,
   showProfile,
@@ -20,6 +22,7 @@ const Sidebar = ({
   handleAboutClick,
   handleTeamClick,
   handleTermsClick,
+  handleContactClick
 }) => {
   const { username } = useSelector((store) => store.userName);
 
@@ -149,6 +152,16 @@ const Sidebar = ({
               >
                 <FaLink size={20} />
                 SmartBasket
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                href="#"
+                className="nav-link text-white sidebart"
+                onClick={handleContactClick}
+              >
+                <MdContactSupport size={24} />
+                Contact Us
               </a>
             </li>
           </ul>

@@ -12,6 +12,8 @@ import Settings from "./Settings";
 import Team from "./Team";
 import AboutUs from "./About";
 import Terms from "./Terms";
+import Contact from "./Contact";
+
 const HomePage = ({ loginTOhome, homepage }) => {
   const [sidebar, setSidebar] = useState(0);
   const [shoppingVar, setShoppingVar] = useState(0);
@@ -21,6 +23,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
   const [team, setTeam] = useState(0);
   const [about, setAbout] = useState(0);
   const [terms, setTerms] = useState(0);
+  const [contact, setContact] = useState(0);
 
   const { newItem } = useSelector((store) => store.items);
 
@@ -33,6 +36,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
     setSidebar(0);
     setAbout(0);
     setTerms(0);
+    setContact(0);
   };
 
   const handleHomeClick = () => {
@@ -42,6 +46,10 @@ const HomePage = ({ loginTOhome, homepage }) => {
   const handleCartClick = () => {
     resetAllViews();
     setViewCart(1);
+  };
+  const handleContactClick = () => {
+    resetAllViews();
+    setContact(1);
   };
   const handleAboutClick = () => {
     resetAllViews();
@@ -145,6 +153,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
           handleTeamClick={handleTeamClick}
           handleAboutClick={handleAboutClick}
           handleTermsClick={handleTermsClick}
+          handleContactClick={handleContactClick}
         />
       )}
 
@@ -159,7 +168,9 @@ const HomePage = ({ loginTOhome, homepage }) => {
       ) : about === 1 ? (
         <AboutUs sidebar={sidebar} setSidebar={setSidebar} />
       ) : terms === 1 ? (
-        <Terms sidebar={sidebar} setSidebar={setSidebar}/>
+        <Terms sidebar={sidebar} setSidebar={setSidebar} />
+      ) : contact === 1 ? (
+        <Contact sidebar={sidebar} setSidebar={setSidebar} />
       ) : viewCart === 1 ? (
         <ShoppingCart sidebar={sidebar} setSidebar={setSidebar} />
       ) : shoppingVar === 1 ? (
@@ -222,6 +233,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
         setSidebar={setSidebar}
         handleAboutClick={handleAboutClick}
         handleTermsClick={handleTermsClick}
+        handleContactClick={handleContactClick}
       />
     </>
   );

@@ -1,4 +1,4 @@
-const Footer = ({sidebar,setSidebar,handleAboutClick,handleTermsClick}) => {
+const Footer = ({sidebar,setSidebar,handleAboutClick,handleTermsClick,handleContactClick}) => {
   return (
     <>
       <footer className="py-3 my-4"  onClick={() => {
@@ -18,7 +18,7 @@ const Footer = ({sidebar,setSidebar,handleAboutClick,handleTermsClick}) => {
             </a>
           </li>
           <li className="nav-item">
-            <a href="#" className="nav-link px-2 text-body-secondary">
+            <a href="#" className="nav-link px-2 text-body-secondary" onClick={handleContactClick}>
               Contact
             </a>
           </li>

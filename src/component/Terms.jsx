@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
-
+import Spinner from "./Spinner";
 const Terms = ({ sidebar, setSidebar }) => {
   const [message, setMessage] = useState("");
+  const [spinner, setSpinner] = useState(0);
 
   const handleEmail = () => {
     const userEmail = localStorage.getItem("currLoggedInUser");
@@ -26,20 +27,21 @@ const Terms = ({ sidebar, setSidebar }) => {
       user_email: userEmail,
       message: message,
     };
-
+    setSpinner(1);
     emailjs
       .send(
-        "service_2bir0fc", // Your EmailJS service ID
-        "template_fzhwgjl", // Your EmailJS template ID
+        "service_2bir0fc",
+        "template_fzhwgjl",
         templateParams,
-        "SvdB5ZoOGJGZYa3Qb" // Your EmailJS public key
+        "SvdB5ZoOGJGZYa3Qb"
       )
       .then(() => {
+        setSpinner(0);
         Swal.fire("Message Sent", "Thanks for contacting us! 🎉", "success");
         setMessage("");
       })
       .catch((error) => {
-        console.error("EmailJS Error:", error);
+        setSpinner(0);
         Swal.fire(
           "Error",
           "Couldn't send your message. Please try again later.",
@@ -103,6 +105,7 @@ const Terms = ({ sidebar, setSidebar }) => {
             <h1 id="headingNews">Need help with Terms?</h1>
             <p id="paraNews">Send us your question or message below:</p>
             <div className="loginMainDiv">
+              {spinner === 1 && <Spinner />}
               <textarea
                 id="inputNews"
                 placeholder="Type your message."

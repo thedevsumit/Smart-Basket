@@ -32,7 +32,7 @@ const AboutUs = ({sidebar,setSidebar}) => {
           localStorage.setItem("newsLetter", "true");
           setConfirm("");
         } catch (error) {
-          console.error("Error saving email:", error);
+         
           Swal.fire("Oops!", "Something went wrong. Try again later.", "error");
         }
       } else {
