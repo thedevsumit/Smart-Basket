@@ -10,6 +10,8 @@ import { IoHomeSharp } from "react-icons/io5";
 import Profile from "./Profile";
 import Settings from "./Settings";
 import Team from "./Team";
+import AboutUs from "./About";
+import Terms from "./Terms";
 const HomePage = ({ loginTOhome, homepage }) => {
   const [sidebar, setSidebar] = useState(0);
   const [shoppingVar, setShoppingVar] = useState(0);
@@ -17,6 +19,8 @@ const HomePage = ({ loginTOhome, homepage }) => {
   const [profile, setProfile] = useState(0);
   const [settings, setSettings] = useState(0);
   const [team, setTeam] = useState(0);
+  const [about, setAbout] = useState(0);
+  const [terms, setTerms] = useState(0);
 
   const { newItem } = useSelector((store) => store.items);
 
@@ -26,28 +30,39 @@ const HomePage = ({ loginTOhome, homepage }) => {
     setProfile(0);
     setSettings(0);
     setTeam(0);
-    setSidebar(0)
+    setSidebar(0);
+    setAbout(0);
+    setTerms(0);
   };
-  
+
   const handleHomeClick = () => {
     resetAllViews();
   };
-  
+
   const handleCartClick = () => {
     resetAllViews();
     setViewCart(1);
   };
-  
+  const handleAboutClick = () => {
+    resetAllViews();
+    setAbout(1);
+  };
+
   const handleProfileClick = () => {
     resetAllViews();
     setProfile(1);
   };
-  
+
   const handleTeamClick = () => {
     resetAllViews();
     setTeam(1);
   };
-  
+
+  const handleTermsClick = () => {
+    resetAllViews();
+    setTerms(1);
+  };
+
   const handleSettingsClick = () => {
     resetAllViews();
     setSettings(1);
@@ -128,6 +143,8 @@ const HomePage = ({ loginTOhome, homepage }) => {
           handleCartClick={handleCartClick}
           handleSettingsClick={handleSettingsClick}
           handleTeamClick={handleTeamClick}
+          handleAboutClick={handleAboutClick}
+          handleTermsClick={handleTermsClick}
         />
       )}
 
@@ -139,12 +156,16 @@ const HomePage = ({ loginTOhome, homepage }) => {
         />
       ) : settings === 1 ? (
         <Settings sidebar={sidebar} setSidebar={setSidebar} />
+      ) : about === 1 ? (
+        <AboutUs sidebar={sidebar} setSidebar={setSidebar} />
+      ) : terms === 1 ? (
+        <Terms sidebar={sidebar} setSidebar={setSidebar}/>
       ) : viewCart === 1 ? (
         <ShoppingCart sidebar={sidebar} setSidebar={setSidebar} />
       ) : shoppingVar === 1 ? (
         <MainShoppingPage sidebar={sidebar} setSidebar={setSidebar} />
       ) : team === 1 ? (
-        <Team sidebar={sidebar} setSidebar={setSidebar}/>
+        <Team sidebar={sidebar} setSidebar={setSidebar} />
       ) : (
         <div
           onClick={() => {
@@ -196,7 +217,12 @@ const HomePage = ({ loginTOhome, homepage }) => {
           <HowToUse />
         </div>
       )}
-      <Footer sidebar={sidebar} setSidebar={setSidebar} />
+      <Footer
+        sidebar={sidebar}
+        setSidebar={setSidebar}
+        handleAboutClick={handleAboutClick}
+        handleTermsClick={handleTermsClick}
+      />
     </>
   );
 };

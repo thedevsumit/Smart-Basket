@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { GrCart } from "react-icons/gr";
 import { RiTeamFill } from "react-icons/ri";
 import { GoCodeOfConduct } from "react-icons/go";
+import { CgProfile } from "react-icons/cg";
 import { FaLink } from "react-icons/fa";
 const Sidebar = ({
   changingSidebar,
@@ -16,7 +17,9 @@ const Sidebar = ({
   profile,
   handleSettingsClick,
   handleCartClick,
+  handleAboutClick,
   handleTeamClick,
+  handleTermsClick,
 }) => {
   const { username } = useSelector((store) => store.userName);
 
@@ -56,38 +59,10 @@ const Sidebar = ({
         >
           <div className={styles["icon-cross"]}>
             {currLoggedInUser && (
-              <div className="dropdown">
-                <a
-                  href="#"
-                  className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <img
-                    src="https://static.vecteezy.com/system/resources/previews/005/005/788/non_2x/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
-                    alt=""
-                    width="32"
-                    height="32"
-                    className="rounded-circle me-2"
-                  />
-                  <strong>{currLoggedInUser}</strong>
-                </a>
-                <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-                  <li>
-                    <a
-                      className="dropdown-item"
-                      href="#"
-                      onClick={() => showProfile(profile ^ 1)}
-                    >
-                      Profile
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#" onClick={SignOut}>
-                      Sign out
-                    </a>
-                  </li>
-                </ul>
+              <div className="headersidebar">
+                <p className="headertext">
+                  Hi <span>{currLoggedInUser}</span>
+                </p>
               </div>
             )}
 
@@ -101,6 +76,20 @@ const Sidebar = ({
 
           <hr />
           <ul className="nav flex-column mb-auto">
+            <li className="nav-item">
+              <a
+                href="#"
+                className="nav-link text-white sidebart"
+                onClick={() => {
+                  showProfile(profile ^ 1);
+
+                  changingSidebar(0);
+                }}
+              >
+                <CgProfile size={23} />
+                Profile
+              </a>
+            </li>
             <li className="nav-item">
               <a
                 href="#"
@@ -123,19 +112,31 @@ const Sidebar = ({
               </a>
             </li>
             <li className="nav-item">
-              <a href="#" className="nav-link text-white sidebart spec1">
+              <a
+                href="#"
+                className="nav-link text-white sidebart spec1"
+                onClick={handleTermsClick}
+              >
                 <GoCodeOfConduct size={20} />
                 Terms
               </a>
             </li>
             <li className="nav-item">
-              <a href="#" className="nav-link text-white sidebart">
+              <a
+                href="#"
+                className="nav-link text-white sidebart"
+                onClick={handleAboutClick}
+              >
                 <FaExternalLinkAlt size={20} />
                 About Us
               </a>
             </li>
             <li className="nav-item">
-              <a href="#" className="nav-link text-white sidebart spec2" onClick={handleTeamClick}>
+              <a
+                href="#"
+                className="nav-link text-white sidebart spec2"
+                onClick={handleTeamClick}
+              >
                 <RiTeamFill size={20} />
                 Team
               </a>

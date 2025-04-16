@@ -11,7 +11,7 @@ const Profile = ({loginTOhome,sidebar,setSidebar}) => {
     phone: "",
     location: "",
   });
-  const [transactions, setTransactions] = useState([]);
+ 
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -27,10 +27,7 @@ const Profile = ({loginTOhome,sidebar,setSidebar}) => {
         const userData = userDoc.data();
         setFormData(userData);
 
-        const txRef = collection(db, "Users", userDoc.id, "transactions");
-        const txSnap = await getDocs(txRef);
-        const txList = txSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setTransactions(txList);
+       
       }
     };
 
