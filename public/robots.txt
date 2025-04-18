@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://smart-basket-hazel.vercel.app/sitemap.xml
