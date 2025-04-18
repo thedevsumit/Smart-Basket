@@ -36,7 +36,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
     setTeam(0);
     setSidebar(0);
     setAbout(0);
-    setTerms(0);y
+    setTerms(0);
     
     setContact(0);
   };
