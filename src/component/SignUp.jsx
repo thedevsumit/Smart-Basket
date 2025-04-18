@@ -7,93 +7,152 @@ import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import Spinner from "./Spinner";
 import { db } from "../firebaseConfig";
-import { setDoc,doc} from "firebase/firestore";
+// import { firebaseConfig, db } from "../firebaseConfig";
+import emailjs from "@emailjs/browser";
+// import { initializeApp } from "firebase/app";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
+import { FcGoogle } from "react-icons/fc";
 import { userAction } from "../store/privacy";
-const SignUp = ({ signInToUp, homepage,loginTOhome }) => {
+const SignUp = ({ signInToUp, homepage, loginTOhome }) => {
   initializeApp(firebaseConfig);
   const auth = getAuth();
-const dispatch = useDispatch();
+  const provider = new GoogleAuthProvider();
+  const [otpyes, setotpyes] = useState(0);
+  const [sending, setsending] = useState(0);
+  const [final, setfinal] = useState(0);
+  const dispatch = useDispatch();
   const UserNameElement = useRef();
   const emailElement = useRef();
-  const [spinnerval,setspinnerval] = useState(0)
   const passwordElement = useRef();
-  const phoneNoElement = useRef();
-  const [alertMsg, setalertMsg] = useState("");
-  const [alertTitle, setalertTitle] = useState("");
-  const [alertIcon, setalertIcon] = useState("");
-  const isNumeric = (str) => {
-    return /^\d+$/.test(str);
+
+  const [spinnerval, setspinnerval] = useState(0);
+  const [enteredOtp, setEnteredOtp] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState("");
+  const [generatedOtpExpiry, setGeneratedOtpExpiry] = useState("");
+  const [otpVerified, setOtpVerified] = useState(false);
+
+  const sendEmail = (email, user_name) => {
+
+    const otp = Math.floor(100000 + Math.random() * 900000); // 6-digit OTP
+    const expiry = new Date(Date.now() + 15 * 60 * 1000); // 15 min expiry
+    setGeneratedOtp(otp.toString());
+    setGeneratedOtpExpiry(expiry);
+
+    const templateParams = {
+      email,
+      user_name,
+      otp,
+      expiry_time: expiry.toLocaleTimeString(),
+    };
+setspinnerval(1)
+    emailjs
+      .send(
+        "service_2bir0fc",
+        "template_bkhs2ke",
+        templateParams,
+        "SvdB5ZoOGJGZYa3Qb"
+      )
+      .then(() => {
+        Swal.fire("Sent!", "OTP sent to your email ✅", "success");
+        setsending(1)
+        setspinnerval(0)
+      })
+      .catch((err) => {
+        console.error("Error sending email:", err);
+        Swal.fire("Error", "Failed to send OTP ❌", "error");
+        setspinnerval(0)
+      });
   };
+
+  const handleSendOtp = (e) => {
+    e.preventDefault();
+    const username = UserNameElement.current.value;
+    const email = emailElement.current.value;
+    if (!username || !email) {
+      showAlert("error", "Missing Info", "Enter username and email first");
+      return;
+    }
+    sendEmail(email, username);
+  };
+
+  const verifyOtp = () => {
+    const currentTime = new Date().getTime();
+    const otpExpiryTime = new Date(generatedOtpExpiry).getTime();
+
+    if (currentTime > otpExpiryTime) {
+      Swal.fire(
+        "Expired OTP ❌",
+        "OTP expired. Please request a new one.",
+        "error"
+      );
+    } else if (enteredOtp === generatedOtp) {
+      setOtpVerified(true);
+      setfinal(1)
+      setsending(0)
+      Swal.fire("Verified ✅", "OTP matched successfully", "success");
+    } else {
+      Swal.fire("Invalid OTP ❌", "OTP does not match", "error");
+      
+    }
+    setEnteredOtp("");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
+    if (!otpVerified) {
+      showAlert("error", "Verify OTP", "Please verify the OTP first");
+      return;
+    }
+
     const username = UserNameElement.current.value;
     const email = emailElement.current.value;
     const password = passwordElement.current.value;
-    const phoneno = phoneNoElement.current.value;
 
-    if (!username || !email || !password || !phoneno) {
-      setalertIcon("error");
-      setalertMsg("Please fill in all the details first.");
-      setalertTitle("Error");
-      showAlert("error", "Error", "Please fill in all the details first.");
-      return;
-    } else if (phoneno.length !== 10 || !isNumeric(phoneno)) {
-      showAlert("error", "Error", "Invalid Phone Number");
+    if (!username || !email || !password) {
+      showAlert("error", "Missing Info", "Fill all fields");
       return;
     } else if (password.length < 8) {
-      showAlert("error", "Error", "Password must have 8 characters");
+      showAlert("error", "Weak Password", "Password must have 8 characters");
       return;
     }
-    let data = {
-      username,
-      email,
-      password,
-      phoneno,
-      
-    };
 
-    UserNameElement.current.value = "";
-    emailElement.current.value = "";
-    passwordElement.current.value = "";
-    phoneNoElement.current.value = "";
-    
-   try {
-    document.querySelector(".main-container").style.opacity = "0.6";
-    setspinnerval(1)
-    await createUserWithEmailAndPassword(auth, email, password);
-    setspinnerval(0)
-    document.querySelector(".main-container").style.opacity = "1";
-    const user = auth.currentUser;
-    showAlert("success", "Success", "Succesfully created account");
-    loginTOhome(1);
-    if(user){
-      await setDoc(doc(db,"Users",user.uid),{
-        email: user.email,
-        username: username,
-        phoneno: phoneno
-      })
-      dispatch(userAction.newName(username))
-      localStorage.setItem("currLoggedInUser", email); 
-     }
-     
-    
-   } catch (error) {
-    document.querySelector(".main-container").style.opacity = "1";
-    setspinnerval(0)
-    setalertIcon("error");
-    setalertMsg("Please fill in all the details first.");
-    setalertTitle("Error");
-    showAlert("error", "Error", "Email already in Use");
-   }
+    const avatarURL = `https://ui-avatars.com/api/?name=${username
+      .charAt(0)
+      .toUpperCase()}&length=1&background=4CAF50&color=fff&bold=true`;
+
+    try {
+      document.querySelector(".main-container").style.opacity = "0.6";
+      setspinnerval(1);
+      await createUserWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+      await setDoc(doc(db, "Users", user.uid), {
+        username,
+        email,
+        avatarURL,
+      });
+
+      dispatch(userAction.newName(username));
+      localStorage.setItem("currLoggedInUser", email);
+
+      setspinnerval(0);
+      document.querySelector(".main-container").style.opacity = "1";
+      showAlert("success", "Success", "Account created successfully!");
+      loginTOhome(1);
+    } catch (error) {
+      setspinnerval(0);
+      document.querySelector(".main-container").style.opacity = "1";
+      showAlert("error", "Error", error.message);
+    }
   };
 
   const showAlert = (icon, title, message) => {
     Swal.fire({
-      title: title,
+      title,
       text: message,
-      icon: icon,
+      icon,
       confirmButtonText: "OK",
       background: "#f8f9fa",
       color: "#000",
@@ -172,32 +231,86 @@ const dispatch = useDispatch();
               />
               <label htmlFor="floatingEmail">Email address</label>
             </div>
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="floatingPhone"
-                placeholder="Phone No"
-                ref={phoneNoElement}
-              />
-              <label htmlFor="floatingPhone">Phone No</label>
-            </div>
 
-            <div
-              className={styles["signin-color"]}
-              onClick={() => {
-                signInToUp("SignUp");
-               
-              }}
+           {sending === 0 && <button
+              style={{ marginTop: "15px" }}
+              className="btn btn-primary w-100 py-2"
+              onClick={handleSendOtp}
+              type="button"
             >
-              Sign In
-            </div>
-            <button className="btn btn-primary w-100 py-2" type="submit">
-              Sign Up
-            </button>
+              Send OTP
+            </button>}
+            {otpyes === 0 && (
+              <div>
+               {sending === 1 &&  <div style={{ marginTop: "20px" }} className="form-floating">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={enteredOtp}
+                    onChange={(e) => setEnteredOtp(e.target.value)}
+                    placeholder="Enter OTP"
+                  />
+                  <label htmlFor="floatingEmail">Enter OTP</label>
+                </div>}
+                {sending === 1 && <button
+                  className="button btn btn-primary w-100 py-2"
+                  style={{ marginTop: "20px" }}
+                  onClick={verifyOtp}
+                >
+                  Verify OTP
+                </button>}
+               {final === 1 && <div
+                  className={styles["signin-color"]}
+                  onClick={() => {
+                    signInToUp("SignUp");
+                  }}
+                >
+                  Sign In
+                </div>}
+              { final === 1 &&  <button
+                  className="btn btn-primary w-100 py-2"
+                  type="submit"
+                  disabled={!otpVerified}
+                >
+                  Create Account
+                </button>}
+              </div>
+            )}
           </form>
         </main>
-        {spinnerval === 1 && <Spinner/>}
+        <hr className="hr1" />
+        <div className="divgoogle">
+          {" "}
+          <div className="googleicon">
+            <FcGoogle size={25} />
+          </div>
+          <button
+            className="google"
+            onClick={() => {
+              setspinnerval(1);
+              signInWithPopup(auth, provider).then(async (result) => {
+                const user = result.user;
+                setspinnerval(0);
+                showAlert("success", "Success", "Login successfully!");
+                const username = user.displayName;
+                const email = user.email;
+                const avatarURL = user.photoURL;
+                await setDoc(doc(db, "Users", user.uid), {
+                  username,
+                  email,
+                  avatarURL,
+                });
+                localStorage.setItem("currLoggedInUser", email);
+                
+                loginTOhome(1);
+              });
+            }}
+          >
+            Continue with Google
+          </button>
+        </div>
+
+        {spinnerval === 1 && <Spinner />}
         <div className={`container ${styles["footer-margin"]}`}>
           <footer className="py-3 my-4">
             <ul className="nav justify-content-center border-bottom pb-3 mb-3">

@@ -14,6 +14,7 @@ import AboutUs from "./About";
 import Terms from "./Terms";
 import Contact from "./Contact";
 
+
 const HomePage = ({ loginTOhome, homepage }) => {
   const [sidebar, setSidebar] = useState(0);
   const [shoppingVar, setShoppingVar] = useState(0);
@@ -35,7 +36,8 @@ const HomePage = ({ loginTOhome, homepage }) => {
     setTeam(0);
     setSidebar(0);
     setAbout(0);
-    setTerms(0);
+    setTerms(0);y
+    
     setContact(0);
   };
 
@@ -228,6 +230,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
           <HowToUse />
         </div>
       )}
+    
       <Footer
         sidebar={sidebar}
         setSidebar={setSidebar}

@@ -7,15 +7,19 @@ import Swal from "sweetalert2";
 // import { firestore } from "../firebaseConfig";
 // import { addDoc, collection } from "firebase/firestore";
 import Sidebar from "./Sidebar";
+import { setDoc, doc } from "firebase/firestore";
 import Spinner from "./Spinner";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { userAction } from "../store/privacy";
+import { FcGoogle } from "react-icons/fc";
+import { db } from "../firebaseConfig";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 // import OtpInput from "react-otp-input";
 // import { useNavigate } from "react-router-dom";
 
-const SignIn = ({ signInToUp, homepage,loginTOhome }) => {
+const SignIn = ({ signInToUp, homepage, loginTOhome }) => {
   //  const navigate = useNavigate();
   // const { addData, signinData } = useContext(SignIn);
   // const UserNameElement = useRef();
@@ -84,10 +88,12 @@ const SignIn = ({ signInToUp, homepage,loginTOhome }) => {
   // const { loggingIn, signinData } = useContext(SignIn);
   // const navigate = useNavigate();
   // const [usernametest, setUsername] = useState("");
-const dispatch = useDispatch();
-const {username} = useSelector((store)=>store.userName)
-const currentuser = username;
-const [spinnerval,setspinnerval] = useState(0)
+  const dispatch = useDispatch();
+  const [userDetails, setUserDetails] = useState(null);
+  const provider = new GoogleAuthProvider();
+  const { username } = useSelector((store) => store.userName);
+  const currentuser = username;
+  const [spinnerval, setspinnerval] = useState(0);
   const UserNameElement = useRef();
   const passwordElement = useRef();
   const [alertMsg, setalertMsg] = useState("");
@@ -106,23 +112,22 @@ const [spinnerval,setspinnerval] = useState(0)
     }
     try {
       document.querySelector(".container-main").style.opacity = "0.6";
-      setspinnerval(1)
+      setspinnerval(1);
       await signInWithEmailAndPassword(auth, username, password);
-      setspinnerval(0)
+      setspinnerval(0);
       showAlert("success", "Success!", "Successfully Logged In");
       const user = auth.currentUser;
       document.querySelector(".container-main").style.opacity = "1";
-     
+
       // if(user){
       //   dispatch(userAction.newName(username))
       // }
-      
-      localStorage.setItem("currLoggedInUser", username); 
-      loginTOhome(1); 
-      
+
+      localStorage.setItem("currLoggedInUser", username);
+      loginTOhome(1);
     } catch (error) {
       document.querySelector(".container-main").style.opacity = "1";
-      setspinnerval(0)
+      setspinnerval(0);
       showAlert("error", "Error", "Invalid Credentials");
     }
     UserNameElement.current.value = "";
@@ -167,7 +172,7 @@ const [spinnerval,setspinnerval] = useState(0)
           />
         </div>
       </div>
-      
+
       {sidebar === 1 && (
         <Sidebar
           homepage={homepage}
@@ -191,7 +196,7 @@ const [spinnerval,setspinnerval] = useState(0)
                 placeholder="UserName"
                 ref={UserNameElement}
               />
-              <label htmlFor="floatingInput">Username</label>
+              <label htmlFor="floatingInput">User Email</label>
             </div>
             <div className="form-floating">
               <input
@@ -203,7 +208,7 @@ const [spinnerval,setspinnerval] = useState(0)
               />
               <label htmlFor="floatingPassword">Password</label>
             </div>
-            
+
             <div
               className={styles["signin-color"]}
               onClick={() => {
@@ -218,7 +223,39 @@ const [spinnerval,setspinnerval] = useState(0)
             </button>
           </form>
         </main>
-        {spinnerval === 1 && <Spinner/>}
+        <hr className="hr1" />
+        <div className="divgoogle">
+          {" "}
+          <div className="googleicon">
+            <FcGoogle size={25} />
+          </div>
+          <button
+            className="google"
+            onClick={() => {
+              setspinnerval(1);
+              signInWithPopup(auth, provider).then(async (result) => {
+                const user = result.user;
+                setspinnerval(0);
+                showAlert("success", "Success", "Login successfully!");
+                const username = user.displayName;
+                const email = user.email;
+                const avatarURL = user.photoURL;
+                await setDoc(doc(db, "Users", user.uid), {
+                  username,
+                  email,
+                  avatarURL,
+                });
+                localStorage.setItem("currLoggedInUser", email);
+                setUserDetails(username);
+                loginTOhome(1);
+              });
+              setspinnerval(0);
+            }}
+          >
+            Continue with Google
+          </button>
+        </div>
+        {spinnerval === 1 && <Spinner />}
         <div className={`container ${styles["footer-margin"]}`}>
           <footer className="py-3 my-4">
             <ul className="nav justify-content-center border-bottom pb-3 mb-3">

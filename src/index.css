@@ -685,3 +685,37 @@ body {
     font-size: 0.9rem;
   }
 }
+.google{
+
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2f6ee9;
+  background-color: white;
+  border: none;
+}
+.google:hover{
+  background-color: white;
+  color: #2f6ee9;
+}
+.hr1{
+  margin-top: 30px;
+}
+.divgoogle{
+  display: flex;
+  height: 50px;
+  width: 280px;
+ 
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #2f6ee9;
+  border-radius: 14px;
+}
+.googleicon{
+  margin-right: 10px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

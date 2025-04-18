@@ -64,7 +64,8 @@ const Sidebar = ({
             {currLoggedInUser && (
               <div className="headersidebar">
                 <p className="headertext">
-                  Hi <span>{currLoggedInUser}</span>
+                Hi <span>{currLoggedInUser?.split(" ")[0]}</span>
+
                 </p>
               </div>
             )}

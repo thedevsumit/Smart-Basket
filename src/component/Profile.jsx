@@ -4,14 +4,14 @@ import { db } from "../firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Swal from "sweetalert2";
 import Settings from "./Settings";
-const Profile = ({loginTOhome,sidebar,setSidebar}) => {
+const Profile = ({ loginTOhome, sidebar, setSidebar }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
-    location: "",
+  
+
+    avatarURL: "",
   });
- 
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -26,8 +26,6 @@ const Profile = ({loginTOhome,sidebar,setSidebar}) => {
         const userDoc = querySnapshot.docs[0];
         const userData = userDoc.data();
         setFormData(userData);
-
-       
       }
     };
 
@@ -38,6 +36,7 @@ const Profile = ({loginTOhome,sidebar,setSidebar}) => {
     loginTOhome(0);
     showAlert("success", "Success", "Logged out successfully");
   };
+  console.log(formData.avatarURL);
   const showAlert = (icon, title, message) => {
     Swal.fire({
       title: title,
@@ -50,18 +49,25 @@ const Profile = ({loginTOhome,sidebar,setSidebar}) => {
     });
   };
   return (
-    <div className={styles.profileContainer}  onClick={() => {
-      if (sidebar === 1) {
-        setSidebar(0);
-      }
-    }}>
-
+    <div
+      className={styles.profileContainer}
+      onClick={() => {
+        if (sidebar === 1) {
+          setSidebar(0);
+        }
+      }}
+    >
       <div className={styles.profileCard}>
         <img
-          src="https://static.vecteezy.com/system/resources/previews/005/005/788/non_2x/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
+          src={
+            formData.avatarURL ||
+            `https://ui-avatars.com/api/?name=${(formData.username ||
+              "U")[0].toUpperCase()}&length=1&background=4CAF50&color=fff&bold=true`
+          }
           alt="User Avatar"
           className={styles.avatar}
         />
+
         <h2>User Profile</h2>
         <div className={styles.profileInfo}>
           <label>Name</label>
@@ -70,10 +76,7 @@ const Profile = ({loginTOhome,sidebar,setSidebar}) => {
           <label>Email</label>
           <p>{formData.email}</p>
 
-          <label>Phone</label>
-          <p>{formData.phoneno}</p>
-
-          
+         
         </div>
 
         <div className={styles.buttonGroup}>
@@ -81,10 +84,7 @@ const Profile = ({loginTOhome,sidebar,setSidebar}) => {
             LOGOUT
           </button>
         </div>
-
-       
       </div>
-      
     </div>
   );
 };
