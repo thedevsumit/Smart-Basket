@@ -81,3 +81,73 @@
   background-color: #dc3545;
   /* color: white; */
 }
+.profileContainer {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.profileCard {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.profileInfo {
+  margin-top: 1rem;
+}
+
+.profileInfo label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+.buttonGroup {
+  margin-top: 20px;
+}
+
+.logoutBtn {
+  background-color: #e53935;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background-color: #d32f2f;
+}
+
+.historySection {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+}
+
+.orderCard {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+}
+
+.orderCard ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+

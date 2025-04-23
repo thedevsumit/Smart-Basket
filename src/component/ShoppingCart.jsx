@@ -7,6 +7,9 @@ import { RxCross2 } from "react-icons/rx";
 import { IoMdAdd } from "react-icons/io";
 import { RiSubtractLine } from "react-icons/ri";
 import { quantityAction } from "../store/quantitycounter";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import Swal from "sweetalert2";
 const ShoppingCart = ({ sidebar, setSidebar }) => {
   const dispatch = useDispatch();
   const handleSubmit = (val) => {
@@ -25,10 +28,48 @@ const ShoppingCart = ({ sidebar, setSidebar }) => {
 
   const { newItem } = useSelector((store) => store.items);
   const temp = newItem;
-
+const showAlert = (icon, title, message) => {
+      Swal.fire({
+        title: title,
+        text: message,
+        icon: icon,
+        confirmButtonText: "OK",
+        background: "#f8f9fa",
+        color: "#000",
+        timer: 3000,
+      });
+    };
   const totalMRP = temp.reduce((sum, item) => {
     return sum + parseInt(item.price.replace("₹", "")) * item.quantity;
   }, 0);
+  const handlePlaceOrder = async () => {
+    if(temp.length === 0){
+      showAlert("error","Error","Add items to cart first")
+      return;
+    }
+    const email = localStorage.getItem("currLoggedInUser");
+    if (!email) {
+      alert("You must be logged in to place an order.");
+      return;
+    }
+
+    const orderData = {
+      email,
+      items: temp,
+    
+      totalAmount,
+      timestamp: new Date().toISOString(),
+    };
+
+    try {
+      await addDoc(collection(db, "PurchaseHistory"), orderData);
+      showAlert("success","Success","Order placed Successfully!")
+      dispatch(itemAction.clearCart());
+    } catch (error) {
+      showAlert("error","Error","Order cannot be placed!")
+      
+    }
+  };
 
   const totalDiscount = temp.reduce((sum, item) => {
     const original = parseInt(item.price.replace("₹", ""));
@@ -123,15 +164,8 @@ const ShoppingCart = ({ sidebar, setSidebar }) => {
             <span className="price-item-tag">Total Amount</span>
             <span className="price-item-value">₹{totalAmount}</span>
           </div>
-          <button className="btn-place-order mt-4">
-            <div
-              className="css-xjhrni"
-              onClick={() => {
-                alert("Working on it soon");
-              }}
-            >
-              PLACE ORDER
-            </div>
+          <button className="btn-place-order mt-4" onClick={handlePlaceOrder}>
+            <div className="css-xjhrni">PLACE ORDER</div>
           </button>
         </div>
       </div>

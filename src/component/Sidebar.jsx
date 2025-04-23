@@ -17,17 +17,18 @@ const Sidebar = ({
   changingSidebar,
   showProfile,
   profile,
+  homepage,
   handleSettingsClick,
   handleCartClick,
   handleAboutClick,
   handleTeamClick,
   handleTermsClick,
-  handleContactClick
+  handleContactClick,
 }) => {
   const { username } = useSelector((store) => store.userName);
 
   let currLoggedInUser = username;
-
+let displayName = currLoggedInUser;
   const showAlert = (icon, title, message) => {
     Swal.fire({
       title: title,
@@ -39,7 +40,9 @@ const Sidebar = ({
       timer: 3000,
     });
   };
-
+  if (!homepage) {
+    displayName = "Login";
+  }
   const SignOut = () => {
     localStorage.removeItem("currLoggedInUser");
     showAlert("success", "Success", "Logged out successfully");
@@ -61,11 +64,10 @@ const Sidebar = ({
           style={{ width: "200px" }}
         >
           <div className={styles["icon-cross"]}>
-            {currLoggedInUser && (
+            {displayName && (
               <div className="headersidebar">
                 <p className="headertext">
-                Hi <span>{currLoggedInUser?.split(" ")[0]}</span>
-
+                  Hi <span>{displayName?.split(" ")[0]}</span>
                 </p>
               </div>
             )}
