@@ -43,7 +43,7 @@ const AdminPanel = () => {
     }
 
     try {
-      const itemRef = doc(db, "mallItems", mallItems.id);
+      const itemRef = doc(db, "Mallitems", mallItems.id);
       await setDoc(itemRef, {
         title: mallItems.title,
         description: mallItems.description,
