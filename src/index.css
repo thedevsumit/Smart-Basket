@@ -733,3 +733,21 @@ body {
 .order-card ul {
   margin-left: 20px;
 }
+.admin-panel {
+  padding: 20px;
+  background: #f4f4f4;
+  min-height: 100vh;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.message-card {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 10px;
+}

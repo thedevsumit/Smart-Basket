@@ -13,7 +13,8 @@ import Team from "./Team";
 import AboutUs from "./About";
 import Terms from "./Terms";
 import Contact from "./Contact";
-
+import Reviews from "./Reviews";
+import AdminPanel from "./Admin";
 
 const HomePage = ({ loginTOhome, homepage }) => {
   const [sidebar, setSidebar] = useState(0);
@@ -25,6 +26,8 @@ const HomePage = ({ loginTOhome, homepage }) => {
   const [about, setAbout] = useState(0);
   const [terms, setTerms] = useState(0);
   const [contact, setContact] = useState(0);
+  const [reviews, setReviews] = useState(0);
+  const [admin, setAdmin] = useState(0);
 
   const { newItem } = useSelector((store) => store.items);
 
@@ -37,8 +40,9 @@ const HomePage = ({ loginTOhome, homepage }) => {
     setSidebar(0);
     setAbout(0);
     setTerms(0);
-    
+    setReviews(0);
     setContact(0);
+    setAdmin(0);
   };
 
   const handleHomeClick = () => {
@@ -48,6 +52,15 @@ const HomePage = ({ loginTOhome, homepage }) => {
   const handleCartClick = () => {
     resetAllViews();
     setViewCart(1);
+  };
+
+  const handleAdminClick = () => {
+    resetAllViews();
+    setAdmin(1);
+  };
+  const handleReviewsClick = () => {
+    resetAllViews();
+    setReviews(1);
   };
   const handleContactClick = () => {
     resetAllViews();
@@ -146,6 +159,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
       {sidebar === 1 && (
         <Sidebar
           profile={profile}
+          handleReviewsClick={handleReviewsClick}
           showProfile={setProfile}
           changingSidebar={toggleSidebar}
           loginTOhome={loginTOhome}
@@ -156,6 +170,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
           handleAboutClick={handleAboutClick}
           handleTermsClick={handleTermsClick}
           handleContactClick={handleContactClick}
+          handleAdminClick={handleAdminClick}
         />
       )}
 
@@ -173,10 +188,14 @@ const HomePage = ({ loginTOhome, homepage }) => {
         <Terms sidebar={sidebar} setSidebar={setSidebar} />
       ) : contact === 1 ? (
         <Contact sidebar={sidebar} setSidebar={setSidebar} />
+      ) : reviews === 1 ? (
+        <Reviews sidebar={sidebar} setSidebar={setSidebar} />
       ) : viewCart === 1 ? (
         <ShoppingCart sidebar={sidebar} setSidebar={setSidebar} />
       ) : shoppingVar === 1 ? (
         <MainShoppingPage sidebar={sidebar} setSidebar={setSidebar} />
+      ) : admin === 1 ? (
+        <AdminPanel />
       ) : team === 1 ? (
         <Team sidebar={sidebar} setSidebar={setSidebar} />
       ) : (
@@ -230,7 +249,7 @@ const HomePage = ({ loginTOhome, homepage }) => {
           <HowToUse />
         </div>
       )}
-    
+
       <Footer
         sidebar={sidebar}
         setSidebar={setSidebar}

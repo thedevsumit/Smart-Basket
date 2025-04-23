@@ -7,58 +7,37 @@ import {
   FaInstagram,
   FaWhatsapp,
 } from "react-icons/fa";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "../firebaseConfig"; // Make sure you have this
 const Contact = ({ sidebar, setSidebar }) => {
   const [message, setMessage] = useState("");
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const userEmail = localStorage.getItem("currLoggedInUser");
-
+  
     if (!userEmail) {
-      Swal.fire(
-        "Not Logged In",
-        "Please log in to send us a message.",
-        "error"
-      );
+      Swal.fire("Not Logged In", "Please log in to send us a message.", "error");
       return;
     }
-
+  
     if (message.trim().length === 0) {
-      Swal.fire(
-        "Empty Message",
-        "Please write something before sending.",
-        "warning"
-      );
+      Swal.fire("Empty Message", "Please write something before sending.", "warning");
       return;
     }
-
-    const templateParams = {
-      user_email: userEmail,
-      message,
-    };
-
-    emailjs
-    .send(
-        "service_2bir0fc",
-        "template_fzhwgjl",
-        templateParams,
-        "SvdB5ZoOGJGZYa3Qb"
-      )
-      .then(() => {
-        Swal.fire(
-          "Sent!",
-          "Your message has been sent successfully 📩",
-          "success"
-        );
-        setMessage("");
-      })
-      .catch((err) => {
-        console.error("EmailJS Error:", err);
-        Swal.fire(
-          "Error",
-          "Could not send message. Please try again later.",
-          "error"
-        );
+  
+    try {
+      await addDoc(collection(db, "ContactMessages"), {
+        email: userEmail,
+        message: message.trim(),
+        timestamp: Timestamp.now(),
       });
+  
+      Swal.fire("Sent!", "Your message has been sent successfully 📩", "success");
+      setMessage("");
+    } catch (err) {
+      console.error("Firestore Error:", err);
+      Swal.fire("Error", "Could not send message. Please try again later.", "error");
+    }
   };
 
   return (

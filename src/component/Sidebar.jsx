@@ -7,11 +7,11 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import toast, { Toaster } from "react-hot-toast";
 import { GrCart } from "react-icons/gr";
-import { RiTeamFill } from "react-icons/ri";
+import { RiAdminFill, RiTeamFill } from "react-icons/ri";
 import { GoCodeOfConduct } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import { FaLink } from "react-icons/fa";
-import { MdContactSupport } from "react-icons/md";
+import { MdContactSupport, MdReviews } from "react-icons/md";
 
 const Sidebar = ({
   changingSidebar,
@@ -22,8 +22,10 @@ const Sidebar = ({
   handleCartClick,
   handleAboutClick,
   handleTeamClick,
+  handleReviewsClick,
   handleTermsClick,
   handleContactClick,
+  handleAdminClick,
 }) => {
   const { username } = useSelector((store) => store.userName);
 
@@ -165,6 +167,26 @@ let displayName = currLoggedInUser;
               >
                 <MdContactSupport size={24} />
                 Contact Us
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                href="#"
+                className="nav-link text-white sidebart"
+                onClick={handleReviewsClick}
+              >
+                <MdReviews size={24} />
+               Reviews
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                href="#"
+                className="nav-link text-white sidebart"
+                onClick={handleAdminClick}
+              >
+                <RiAdminFill size={24} />
+               Admin
               </a>
             </li>
           </ul>
