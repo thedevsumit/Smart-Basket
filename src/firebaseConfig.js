@@ -3,14 +3,14 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 export const firebaseConfig = {
-    apiKey: "AIzaSyAEwYrgCYARokEFG3ZfIZkIA3cqe-XPU3A",
-    authDomain: "smartbasket-demo.firebaseapp.com",
-    projectId: "smartbasket-demo",
-    storageBucket: "smartbasket-demo.firebasestorage.app",
-    messagingSenderId: "849172016696",
-    appId: "1:849172016696:web:a9d430f7474d2ff80440cd",
-    measurementId: "G-XD4HBGVJ95"
-  };
+  apiKey: "AIzaSyAPtgUrrJz7Ei0oNx8c2GC5ULpfPAbbAL0",
+  authDomain: "smart-basket-auth.firebaseapp.com",
+  projectId: "smart-basket-auth",
+  storageBucket: "smart-basket-auth.firebasestorage.app",
+  messagingSenderId: "630611314545",
+  appId: "1:630611314545:web:ab4f2bf5ee67fcd4e9d8d0",
+  measurementId: "G-6VVF51LZJ1"
+};
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore(app);

@@ -19,7 +19,7 @@ const teamMembers = [
     name: "Pratham",
     role: "UI/UX Designer",
     github: "https://github.com/pratham",
-    linkedin: "https://linkedin.com/in/pratham_rajput3168",
+    linkedin: "https://www.linkedin.com/in/pratham-tanwar-ba019a350?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     instagram: "https://instagram.com/pratham_rajput3168",
   },
   {
